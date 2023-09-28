@@ -5,36 +5,39 @@ const NUM_ROWS = 5;
 var changeList = [];
 
 // read input and build pokemon data table
-$("#input").on("change", function(e) {
-  var file = e.target.files[0];
-  // input canceled, return
-  if (!file) return;
+const input = document.getElementById("#input");
+if(input){
+  input.on("change", function(e) {
+    var file = e.target.files[0];
+    // input canceled, return
+    if (!file) return;
+  
+    var FR = new FileReader();
+    FR.onload = function(e) {
+      var data = new Uint8Array(e.target.result);
+      var workbook = XLSX.read(data, {
+        type: 'array'
+      });
+      // sheet 1 - pokemon + brains
+      var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+  
+      // header: 1 instructs xlsx to create an 'array of arrays'
+      var result = XLSX.utils.sheet_to_json(firstSheet, {
+        header: 1
+      });
+      // console.log(result[1]); this is Sunkern
+  
+      // create body
+      const body = document.body;
+      // create table
+      const tbl = createTable(result);
+      body.appendChild(tbl);
+    }
+    FR.readAsArrayBuffer(file);
+  });
+}
 
-  var FR = new FileReader();
-  FR.onload = function(e) {
-    var data = new Uint8Array(e.target.result);
-    var workbook = XLSX.read(data, {
-      type: 'array'
-    });
-    // sheet 1 - pokemon + brains
-    var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-
-    // header: 1 instructs xlsx to create an 'array of arrays'
-    var result = XLSX.utils.sheet_to_json(firstSheet, {
-      header: 1
-    });
-    // console.log(result[1]); this is Sunkern
-
-    // create body
-    const body = document.body;
-    // create table
-    const tbl = createTable(result);
-    body.appendChild(tbl);
-  }
-  FR.readAsArrayBuffer(file);
-});
-
-const tipButton = document.getElementById('tipButton')
+const tipButton = document.getElementById('tipButton');
 if(tipButton){
     tipButton.addEventListener("click", function() {
   this.classList.toggle("active");
@@ -49,7 +52,7 @@ if(tipButton){
 });
 }
 
-const dataButton = document.getElementById('dataButton')
+const dataButton = document.getElementById('dataButton');
 if(dataButton){
     dataButton.addEventListener("click", function() {
     this.classList.toggle("active");
@@ -63,12 +66,13 @@ if(dataButton){
     }
     });
 }
+
 // pokemon search function
 function findPokemon() {
   const searchBlock = document.getElementById('pokemon-search');
   let pokeSearchString = searchBlock.value;
   pokeSearchString = pokeSearchString.toLowerCase();
-  for (let el of document.querySelectorAll('.' + pokeSearchString)) {
+  for (let el of document.querySelectorAll('.' , pokeSearchString)) {
     //el.style.visibility = 'hidden';
   }
 }
@@ -77,7 +81,7 @@ function clearPokemon() {
   const clearBlock = document.getElementById('pokemon-clear');
   let pokeSearchString = clearBlock.value;
   pokeSearchString = pokeSearchString.toLowerCase();
-  for (let el of document.querySelectorAll('.' + pokeSearchString)) {
+  for (let el of document.querySelectorAll('.' , pokeSearchString)) {
     //el.style.visibility = 'hidden';
 
     changeList.push(pokeSearchString);
