@@ -7,7 +7,7 @@ var changeList = [];
 // read input and build pokemon data table
 const input = document.getElementById("#input");
 if(input){
-  input.on("change", function(e) {
+  input.on("change", (event) => {
     var file = e.target.files[0];
     // input canceled, return
     if (!file) return;
@@ -83,7 +83,6 @@ function clearPokemon() {
   pokeSearchString = pokeSearchString.toLowerCase();
   for (let el of document.querySelectorAll('.' , pokeSearchString)) {
     //el.style.visibility = 'hidden';
-
     changeList.push(pokeSearchString);
     el.style.display = 'none';
   }
