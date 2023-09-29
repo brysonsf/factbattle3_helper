@@ -4,14 +4,16 @@ const NUM_COLUMNS = 16;
 const NUM_ROWS = 5;
 var changeList = [];
 
+
+// read excel 
+
 // read input and build pokemon data table
-const input = document.getElementById("#input");
-if(input){
-  input.on("change", (event) => {
+if(document.getElementById("#input")){
+  document.getElementById("#input").on("change", (event) => {
     var file = e.target.files[0];
     // input canceled, return
     if (!file) return;
-  
+    
     var FR = new FileReader();
     FR.onload = function(e) {
       var data = new Uint8Array(e.target.result);
@@ -36,7 +38,6 @@ if(input){
     FR.readAsArrayBuffer(file);
   });
 }
-
 const tipButton = document.getElementById('tipButton');
 if(tipButton){
     tipButton.addEventListener("click", function() {
