@@ -87,6 +87,7 @@ body {
     overflow: hidden;
     text-align: center;
     background-color: #f1f1f1;
+    width: 100%;
   }
   
   .column {
