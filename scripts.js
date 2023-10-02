@@ -117,11 +117,10 @@ function clearPokemon() {
       });
       changeList.push(pokeSearchString);
       const cells = document.getElementsByClassName(pokeSearchString+seenPrior);
-      var cellsArr = Array.prototype.slice.call( cells )
+      var cellsArr = Array.prototype.slice.call( cells );
       cellsArr.forEach(cell => {
         cell.style.display='none';
-      })
-      //el.style.display = 'none';
+      });
     }
   }
   

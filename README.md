@@ -156,10 +156,15 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
+- [ clear ] Feature 1
+-- working on showing the user the row being removed
+-- adding a live count of each mon when asking
+- [ remove ] Feature 2
+-- have the one by one
+    - [ instance tracker ] tracking the instance of mons when needed
+- [ find ] Feature 3
     - [ ] Nested Feature
+- [ reset ] Feature 4
 
 See the [open issues](https://github.com/brysonsf/factbattle3_helper/issues) for a full list of proposed features (and known issues).
 
