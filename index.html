@@ -1,15 +1,13 @@
-<!doctype html>
-<html lang="en-US">
+<html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <base href="https://bulbapedia.bulbagarden.net/">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css" />
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css" />
     <link rel="stylesheet" href="./styles.css" />
-    <title>RSE Factory Battle Helper</title>
-</head>
+    <script src="./scripts.js" type="text/javascript"></script>
+    <base href="https://bulbapedia.bulbagarden.net/">
+  </head>
 <main>
 <body>
   <!-- Section for Hero -->
@@ -22,7 +20,6 @@
      <info>
      Please upload your own copy of EmeraldBattleFrontierComplete from the dropbox: <br /><a href="https://www.dropbox.com/s/qaujn3plwdgfadc/EmeraldBattleFrontierComplete.xlsx?dl=0"><strong style="color: blue;">Link to download excel sheet</strong></a> <br /><br />
      Throw a Pokeball to use the selected feature.</info>
-
     </p>
   </div>
 </section>
@@ -76,7 +73,7 @@
     <div class="panel-block">
       <!-- Section for  quotes -> general guidelines from reddit -->
       <div id="scientist-quotes-tips" class="box tips">
-        <button type="button" id="tipButton" class="button collapsible">Show Tips on Scientist Quotes</button>
+        <button type="button" id="tipButton" class="collapsible">Show Tips on Scientist Quotes</button>
         <table id="tipContent" class="content table is-striped">
           <thead>
             <tr>
@@ -143,8 +140,8 @@
     <div class="panel-block">
       <!-- Section for data -> raw moves that will trigger categories  -->
       <div id="scientist-quotes-data" class="box data">
-    <button type="button" id="dataButton" class="button collapsible">Show Scientist Exact Moves</button>
-    <table id="dataContent" class="content table is-striped">
+    <button type="button" id="dataButton" class="collapsible">Show Scientist Exact Moves</button>
+    <table id="dataContent" class="table is-striped content">
       <thead>
         <tr>
           <th>Category
@@ -232,6 +229,4 @@
 <footer>
     <p>©Copyright 2050 by nobody. All rights reversed.</p>
   </footer>
-  <script src="./scripts.js" type="text/javascript"></script>
-    
 </html>

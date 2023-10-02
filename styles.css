@@ -13,7 +13,7 @@ body {
     box-shadow: none;
     outline: none;
   }
-  .data, #dataContent, #dataButton, .tips, #tipContent, #tipButton{
+  .data, #dataButton, .tips, #tipButton{
     text-align: center;
   }
   .parsed {
@@ -85,6 +85,7 @@ body {
     padding: 5px;
     display: none;
     overflow: hidden;
+    text-align: center;
     background-color: #f1f1f1;
   }
   
