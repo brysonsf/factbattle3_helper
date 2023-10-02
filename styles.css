@@ -1,212 +1,193 @@
-
-
-.parsed {
-width: 100%;
-color: darkred;
-}
-
-#scientist-quotes-tips,
-#scientist-quotes-data {
-display: flex;
-flex-direction: column;
-flex-wrap: wrap;
-}
-
-#tipContent>tr>td,
-#dataContent>tr>td {
-padding: 5px;
-}
-
-.search, .clear, .reset {
-height: 150px;
-}
-
-.source {
-color: blue;
-font-size: 0.6rem;
-border: 0px;
-}
-
-.tiny {
-font-size: 0.75rem;
-}
-
-pre {
-color: black;
-}
-
-.title {
-background-color: beige;
-padding: 5px 0px 0px 5px;
-}
-
-hr.dottedBlue {
-border-top: 1px dashed blue;
-}
-
-hr.thickGreen {
-border: 10px solid green;
-border-radius: 5px;
-}
-
-table {
-border-spacing: 0px;
-}
-
-.pokemonDisplay {
-overflow-y: scroll;
-height: 500px;
-display: block;
-border: 1px dashed red;
-margin-top: 50px;
-padding: 2px;
-}
-
-.collapsible {
-background-color: #eee;
-color: #444;
-cursor: pointer;
-padding: 18px;
-width: 100%;
-border: none;
-text-align: left;
-outline: none;
-font-size: 1rem;
-}
-
-#quoteButton:hover,
-#dataButton:hover,
-.content>tbody>tr:hover {
-background-color: #ddd;
-}
-
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active,
-.collapsible:hover {
-background-color: #ccc;
-}
-
-/* Style the collapsible content. Note: hidden by default */
-.content {
-padding: 5px;
-display: none;
-overflow: hidden;
-background-color: #f1f1f1;
-}
-
-.column {
-margin-left: 10px;
-}
-
-.input,
-.button {
-margin-bottom: 50px;
-}
-
-/* pokeball animations */
-.pokeButton {
-width: 110px;
-height: 110px;
-position: relative;
-transform: translate(-100%);
-
-}
-
-.poke_box {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(50%, -100%);
-}
-
-.pokeball {
-position: relative;
-margin-bottom: 10px;
-width: 100px;
-height: 100px;
-background: #fff;
-border: 3.5px solid #000;
-border-radius: 50%;
-overflow: hidden;
-box-shadow: inset -8.5px 8px 0 8px #ccc;
-animation: shake 1.25s cubic-bezier(.36, .07, .19, .97) infinite;
-animation-play-state: paused;
-}
-
-.pokeball:hover {
-animation-play-state: running;
-}
-
-@keyframes shake {
-0% {
-    transform: translate(0, 0) rotate(0);
-}
-
-20% {
-    transform: translate(-8px, 0) rotate(-20deg);
-}
-
-30% {
-    transform: translate(8px, 0) rotate(20deg);
-}
-
-50% {
-    transform: translate(-8px, 0) rotate(-10deg);
-}
-
-60% {
-    transform: translate(8px, 0) rotate(10deg);
-}
-
-100% {
-    transform: translate(0, 0) rotate(0);
-}
-}
-
-.pokeball::before,
-.pokeball::after {
-content: "";
-position: absolute;
-}
-
-.pokeball::before {
-background: red;
-width: 100%;
-height: 50%;
-}
-
-.pokeball::after {
-top: calc(50% - 6px);
-width: 100%;
-height: 7px;
-background: #000;
-}
-
-.pokeball__button {
-position: absolute;
-top: calc(50% - 11px);
-left: calc(50% - 10px);
-width: 20px;
-height: 20px;
-background: #fff;
-border: 2px solid #7f8c8d;
-border-radius: 50%;
-z-index: 10;
-box-shadow: 0 0 0 3px black;
-animation: blink .5s alternate infinite;
-animation-play-state: paused;
-}
-
-.pokeball:hover .pokeball__button {
-animation-play-state: running;
-}
-
-@keyframes blink {
-from {
-    background: #eee;
-}
-
-to {
-    background: #e74c3c;
-}
-}
+body {
+    /*columns: 2;*/
+  }
+  
+  
+  .label{
+    width: 100%;
+  }
+  .box{
+    width: 100%;
+  }
+  .button:active:focus{
+    box-shadow: none;
+    outline: none;
+  }
+  .data, #dataContent, #dataButton, .tips, #tipContent, #tipButton{
+    text-align: center;
+  }
+  .parsed {
+    width: 100%;
+    color: darkred;
+  }
+  #pokemon_clear, #pokemon_search{
+    width: 85%;
+  }
+  #scientist-quotes-tips,
+  #scientist-quotes-data {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  
+  .search,
+  .clear,
+  .reset {
+    height: 150px;
+  }
+  .tiny {
+    font-size: 0.75rem;
+  }
+  
+  pre {
+    color: black;
+  }
+  
+  table, .pokeTable {
+    border-spacing: 0px;
+  }
+  
+  .pokemonDisplay {
+    overflow-y: scroll;
+    height: 500px;
+    display: block;
+    border: 1px dashed red;
+    margin-top: 50px;
+    padding: 2px;
+  }
+  
+  .collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  #quoteButton:hover,
+  #dataButton:hover,
+  .content > tbody > tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active,
+  .collapsible:hover {
+    background-color: #ccc;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .content {
+    padding: 5px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
+  
+  .column {
+    margin-left: 10px;
+  }
+  
+  .input,
+  .button {
+    margin-bottom: 50px;
+  }
+  
+  /* Pokeball stuffs */
+  #resetButton, #findButton, #clearButton{
+    border: 0;
+    size: inherit;
+  }
+  .poke_box{
+      position: absolute;
+  }
+  #resetButton > .poke_box{
+    left: -100px;
+    top: 0px;
+    size: inherit;
+  }
+  #clearButton > .poke_box{
+     left: -60px;
+    top: 0px;
+  }
+  #findButton > .poke_box{
+    left: -60px;
+    top: 5px;
+  }
+  
+  .pokeball{
+      position: relative;
+      width: 100px;
+      height: 100px;
+      background: #fff;
+      border: 5px solid #000;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: inset -10px 10px 0 10px #ccc;
+      animation: shake 1.25s cubic-bezier(.36,.07,.19,.97) infinite;
+      animation-play-state: paused;
+  }
+  
+  .pokeball:hover{
+      animation-play-state: running;
+  }
+  
+  @keyframes shake {
+      0% { transform: translate(0, 0) rotate(0); }
+      20% { transform: translate(-10px, 0) rotate(-20deg); }
+      30% { transform: translate(10px, 0) rotate(20deg); }
+      50% { transform: translate(-10px, 0) rotate(-10deg); }
+      60% { transform: translate(10px, 0) rotate(10deg); }
+      100% { transform: translate(0, 0) rotate(0); }
+    }
+  
+  .pokeball::before,
+  .pokeball::after {
+    content:"";
+    position: absolute;
+    width: 100%;
+  }
+  
+  .pokeball::before {
+      left: -80px;
+      background: red;
+      width: 200%;
+      height: 50%;
+    }
+  
+  .pokeball::after {
+      top: calc(50% - 5px);
+      left: -80px;
+      width: 200%;
+      height: 10px;
+      background: #000;
+    }
+  
+    .pokeball__button {
+      position: absolute;
+      top: calc(50% - 10px);
+      left: calc(50% - 10px);
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 4px solid #7f8c8d;
+      border-radius: 50%;
+      z-index: 10;
+      box-shadow: 0 0 0 7px black;
+      animation: blink .5s alternate infinite;
+      animation-play-state: paused;
+    }
+  
+    .pokeball:hover .pokeball__button{
+        animation-play-state: running;
+    }
+  
+    @keyframes blink {
+      from { background: #eee;}
+      to { background: #e74c3c; }
+    }
+  
