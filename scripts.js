@@ -79,6 +79,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     autocomplete(document.getElementById("pokemon_clear"), nameList);
   }
 });
+
+
 // pokemon search function
 function findPokemon() {
 	removeButtonShadow('findButton');
@@ -118,18 +120,19 @@ function clearPokemon() {
     // search for each instance of mon ? or ask for it in input
     // just add mon and check if more exist lol
     // scroll to row using autoScroll()
-    let seenPrior = 0;
+    let monInstance = 1;
     if(pokeTableQueryString){
       changeList.forEach(element => {
         if(element===pokeSearchString){
-          seenPrior+=1;
+          monInstance+=1;
         }
       });
       changeList.push(pokeSearchString);
-      const cells = document.getElementsByClassName(pokeSearchString+seenPrior);
+      const cells = document.getElementsByClassName(pokeSearchString+monInstance);
       var cellsArr = Array.prototype.slice.call( cells );
       cellsArr.forEach(cell => {
-        cell.style.display='none';
+        cell.className = 'redLineTable'; // red out removed mons, DONT remove them I think 
+        //cell.style.display='none';
       });
     }
   }

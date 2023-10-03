@@ -67,9 +67,6 @@ pre {
 .content > tbody > tr:hover {
   background-color: #ddd;
 }
-
-
-
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active,
 .collapsible:hover {
@@ -84,11 +81,9 @@ pre {
   background-color: #f1f1f1;
   width: 100%;
 }
-
 .column {
   margin-left: 10px;
 }
-
 .input,
 .button {
   margin-bottom: 50px;
@@ -115,7 +110,6 @@ pre {
   left: 100%;
   top: 5px;
 }
-
 .pokeball{
     position: relative;
     width: 100px;
@@ -128,11 +122,9 @@ pre {
     animation: shake 1.25s cubic-bezier(.36,.07,.19,.97) infinite;
     animation-play-state: paused;
 }
-
 .pokeball:hover{
     animation-play-state: running;
 }
-
 @keyframes shake {
     0% { transform: translate(0, 0) rotate(0); }
     20% { transform: translate(-10px, 0) rotate(-20deg); }
@@ -141,21 +133,18 @@ pre {
     60% { transform: translate(10px, 0) rotate(10deg); }
     100% { transform: translate(0, 0) rotate(0); }
   }
-
 .pokeball::before,
 .pokeball::after {
   content:"";
   position: absolute;
   width: 100%;
 }
-
 .pokeball::before {
     left: -80px;
     background: red;
     width: 200%;
     height: 50%;
   }
-
 .pokeball::after {
     top: calc(50% - 5px);
     left: -80px;
@@ -163,7 +152,6 @@ pre {
     height: 10px;
     background: #000;
   }
-
   .pokeball__button {
     position: absolute;
     top: calc(50% - 10px);
@@ -178,7 +166,6 @@ pre {
     animation: blink .5s alternate infinite;
     animation-play-state: paused;
   }
-
   .pokeball:hover .pokeball__button{
       animation-play-state: running;
   }
@@ -187,6 +174,7 @@ pre {
     from { background: #eee;}
     to { background: #e74c3c; }
   }
+
  /* autocomplete items styling */
 .autocomplete {
   /*the container must be positioned relative:*/
@@ -219,4 +207,9 @@ pre {
   /*when navigating through the items using the arrow keys:*/
   background-color: DodgerBlue !important;
   color: #ffffff;
+}
+.redLineTable{
+  color: red;
+  font-weight: lighter;
+  font-style: italic;
 }
