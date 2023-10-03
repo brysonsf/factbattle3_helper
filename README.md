@@ -95,15 +95,12 @@
 ### Built With
 
 ONLY JS AND HTML AND CSS
+* Standard HTML, ![js-logo], CSS
+* ![npm-logo]
 * [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
-
+* [![Bulma]][Bulma-url]]
+* [![SheetsJS]][xlsx-url]
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -209,14 +206,6 @@ Project Link: [https://github.com/brysonsf/factbattle3_helper](https://github.co
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -252,3 +241,8 @@ Project Link: [https://github.com/brysonsf/factbattle3_helper](https://github.co
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+[xlsx-url]: https://www.npmjs.com/package/xlsx
+[Bulma-url]: bulma.io
+[Bulma]: https://bulma.io/images/bulma-logo.png
+[js-logo]: https://img.shields.io/badge/logo-javascript-blue?logo=javascript
+[npm-logo]: https://img.shields.io/npm/v/npm.svg?logo=npm
