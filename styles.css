@@ -209,7 +209,9 @@ pre {
   color: #ffffff;
 }
 .redLineTable{
-  color: red;
+  color: darkred;
+  background-color: lightcoral;
+  text-decoration: line-through;
   font-weight: lighter;
   font-style: italic;
 }
