@@ -14,8 +14,8 @@
   width: 100%;
   color: darkred;
 }
-#pokemon_clear, #pokemon_search{
-  width: 85%;
+#pokemon_searchautocomplete-list, #pokemon_clearautocomplete-list {
+  width: 100%;
 }
 #scientist-quotes-tips,
 #scientist-quotes-data {
@@ -37,7 +37,7 @@ pre {
   color: black;
 }
 
-.table, .pokeTable {
+.table{
   border-spacing: 0px;
   width: 100%;
 }
@@ -108,11 +108,11 @@ pre {
   size: inherit;
 }
 #clearButton > .poke_box{
-    left: -60px;
+    left: 100%;
   top: 0px;
 }
 #findButton > .poke_box{
-  left: -60px;
+  left: 100%;
   top: 5px;
 }
 
@@ -187,3 +187,36 @@ pre {
     from { background: #eee;}
     to { background: #e74c3c; }
   }
+ /* autocomplete items styling */
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: -50px;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}

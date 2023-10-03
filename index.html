@@ -31,10 +31,14 @@
     <div class="panel-block" id="input-hider">
       <input type="file" id="input" accept=".xls,.xlsx,.ods" />
     </div>
+
     <div class="panel-block">
-        <p class="control has-icons-right">
-          <input class="input is-rounded" type="search" id="pokemon_search" name="pokemon-search" placeholder="Find a pokemon..." />
-        </p>
+        
+      <form autocomplete="off">
+        <div class="autocomplete" style="width:300px;">
+          <input class="input is-rounded" type="search" id="pokemon_search" name="pokemon_search" placeholder="Find a pokemon..." />
+        </div>
+      </form>
       <button id="findButton" onclick="findPokemon()" class="button is-large"> 
         <div class="poke_box">
           <div class="pokeball" title="Find Ball">
@@ -44,30 +48,32 @@
           </div>
         </div>
       </button>  
-      </div>
-     
-
-    <div class="panel-block">
-      <p class="control has-icons-left">
-        <input type="search" id="pokemon_clear" name="pokemon_clear" class="input is-rounded" placeholder="Remove Pokemon..." />
-      </p>
-       <button id="clearButton" onclick="clearPokemon()" class="button is-large">
-       <div class="poke_box">
-          <div class="pokeball">
-            <div class="pokeball__button"></div>
-          </div>   
-      </div></button>
     </div>
 
     <div class="panel-block">
-        <label for="pokemon_reset" class="label">Reset the pokemon table to default</label>
-        
-<button id="resetButton" onclick="resetTable()" class="button is-large">
-      <div class="poke_box">
+      <form autocomplete="off">
+        <div class="autocomplete" style="width:300px;">
+          <input type="search" id="pokemon_clear" name="pokemon_clear" class="input is-rounded" placeholder="Remove Pokemon..." />
+        </div>
+      </form>
+      <button id="clearButton" onclick="clearPokemon()" class="button is-large">
+        <div class="poke_box">
           <div class="pokeball">
             <div class="pokeball__button"></div>
           </div>   
-      </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="panel-block">
+      <label for="pokemon_reset" class="label">Reset the pokemon table to default</label>
+        
+      <button id="resetButton" onclick="resetTable()" class="button is-large">
+        <div class="poke_box">
+          <div class="pokeball">
+            <div class="pokeball__button"></div>
+          </div>   
+        </div>
       </button>
     </div>
     <div class="panel-block">
