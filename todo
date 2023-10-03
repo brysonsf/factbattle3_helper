@@ -10,10 +10,16 @@ Plans:
     - perhaps extend to ignore removed pokemon (class='redLineTable
 - Feature 3(table sorting)
   - sort based off each row, currently sorted by instance / raw AI PK
+  - sort by item, pokemon, moves, etc.
 - Feature 4(table filtering)
   - remove/hide all instances of a pokemon
   - unhide all instances of a pokemon
   - remove hide pokemon based on instance
     - remove all instance 1 pokemon, but leave their instance 2,3,.....
-- Feature 5()
+- Feature 5(Factory Brain)
+  - create representation / display for Noland (Factory Brain)
+  - make extra cool / fancy
 - Feature 6()
+wants
+- sort by pokemon
+- sort by item
