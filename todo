@@ -1,0 +1,19 @@
+Plans:
+- Feature 1 (database)
+  - move data from excel into postgresql database
+  - nosql or mysql
+  - improves load times
+- Feature 2(table functions)
+  - reset table to base form
+  - store table operations for later reload (cookie? db?)
+  - find mon scrolls to first mon occurence in table
+    - perhaps extend to ignore removed pokemon (class='redLineTable
+- Feature 3(table sorting)
+  - sort based off each row, currently sorted by instance / raw AI PK
+- Feature 4(table filtering)
+  - remove/hide all instances of a pokemon
+  - unhide all instances of a pokemon
+  - remove hide pokemon based on instance
+    - remove all instance 1 pokemon, but leave their instance 2,3,.....
+- Feature 5()
+- Feature 6()
