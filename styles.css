@@ -7,6 +7,7 @@
   float: right;
   height: inherit;
 }
+
 .panel{
   height:auto;
 }
@@ -59,7 +60,7 @@ pre {
   height: 500px;
   display: block;
   border: 1px dashed red;
-  margin-top: 50px;
+  margin-top: 1%;
   padding: 2px;
 }
 
