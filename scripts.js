@@ -99,14 +99,19 @@ function findPokemon() {
   	}	
 		alert("finding "+pokeSearchString+" from table");
 	  pokeSearchString = pokeSearchString.toLowerCase();
-  	const pokeTable = document.getElementsByClassName('pokeTable');
     const pokeTableQueryString = '.' + pokeSearchString;
     
-  	if(pokeTableQueryString){
-   		let queryString = document.querySelectorAll(pokeTableQueryString);
-      queryString.forEach(el => el.style.display = "none");
-		}
-	}
+    let allMonRows = document.querySelectorAll('tr' + pokeTableQueryString); // returns all rows
+    const tableBody = document.querySelector('.pokemonDisplay > tbody');
+    if(allMonRows){
+      allMonRows.forEach(pokemonSearchedRow => {
+          var row = pokemonSearchedRow;
+          //tableBody.firstElementChild.insertBefore(row, null);
+          tableBody.insertBefore( row, tableBody.firstElementChild ); 
+      });
+    }
+  }
+	
 }
 
 function clearPokemon() {
@@ -171,11 +176,11 @@ function createTable(result) {
     headers = result.shift();
     while (result[counter]) {
       var row = tbl.insertRow(counter);
-      row.className = "pokeRow";
       // ignore headers - deal w each pokemon here
       let pkmnData = result[counter] || "";
       let pkmnName = pkmnData[1] || "";
       let pkmnInstance = pkmnData[2] || "";
+      row.className = pkmnName.toLowerCase() + " row";
       for (let g = 0; g < NUM_COLUMNS; g++) {
         if (pkmnData[g] == null) {
           pkmnData[g] = "NO DATA";
