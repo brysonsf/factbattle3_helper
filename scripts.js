@@ -4,6 +4,7 @@ var nameList = [];
 const NUM_COLUMNS = 16;
 const NUM_ROWS = 5;
 var changeList = [];
+let originalTableData;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   // read input and build pokemon data table
@@ -35,9 +36,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if(tableLocation===null || tableLocation === ""){
           console.log("Table location div not found error");
         }
-      }// create table
+      }
+      // create table
+      originalTableData = result;
       const tbl = createTable(result);
-      tbl.className = "table pokemonDisplay";
       const inputToHide = document.getElementById('input-hider');
       if(inputToHide){
         inputToHide.parentNode.removeChild(inputToHide);
@@ -153,6 +155,7 @@ function resetTable() {
 	removeButtonShadow('resetButton');
   alert("resetting table!");
   console.log('reset pokemon table click!');
+  // clear the removal styling
   let queryChangeString = document.querySelectorAll('.redLineTable');
   if(queryChangeString){
     var cellsArr = Array.prototype.slice.call( queryChangeString );
@@ -163,21 +166,30 @@ function resetTable() {
       cell.className = originalMonClass; // remove redLineTable class modifier
     });
   }
+  //re-organize by 
+  // 0-15, 16-31, 32-47
+  const tableLocation = document.getElementById('output_table');
+  tableLocation.removeChild(tableLocation.firstElementChild);
+  const newTable = createTable(originalTableData);
+  tableLocation.appendChild(newTable);
+
 }
-
+let pokeOrder;
 function createTable(result) {
+  let internalResult = result;
   const tbl = document.createElement('table');
-
+  tbl.className = "table pokemonDisplay";
   var headers;
   var counter = 0;
 
   if (result !== "Sorry no data found") {
     // parse listSorted for pkmn data
-    headers = result.shift();
+    headers = result.at(0); // prevents moving down the list each time you click reset
     while (result[counter]) {
       var row = tbl.insertRow(counter);
       // ignore headers - deal w each pokemon here
       let pkmnData = result[counter] || "";
+      let pokeIndex = pkmnData[0] || "";
       let pkmnName = pkmnData[1] || "";
       let pkmnInstance = pkmnData[2] || "";
       row.className = pkmnName.toLowerCase() + " row";
@@ -198,6 +210,8 @@ function createTable(result) {
       counter++;
     }
   }
+  let firstRow =  tbl.firstElementChild;
+  firstRow.removeChild(firstRow.firstElementChild);
   var header = tbl.createTHead();
   var headerRow = header.insertRow(0);
   for (var i = 0; i < headers.length; i++) {
