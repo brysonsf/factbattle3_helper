@@ -28,15 +28,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
       // console.log(result[1]); this is Sunkern
 
       // create body
-      const body = document.body;
-      // create table
+      var tableLocation;
+      try {
+        tableLocation = document.getElementById('output_table');
+      } catch (error) {
+        if(tableLocation===null || tableLocation === ""){
+          console.log("Table location div not found error");
+        }
+      }// create table
       const tbl = createTable(result);
       tbl.className = "table pokemonDisplay";
       const inputToHide = document.getElementById('input-hider');
       if(inputToHide){
         inputToHide.parentNode.removeChild(inputToHide);
       }
-      body.appendChild(tbl);
+      tableLocation.appendChild(tbl);
     }
     FR.readAsArrayBuffer(file);
   });
