@@ -1,6 +1,19 @@
 
 .label{
-  width: 100%;
+  width: 300px;
+}
+.legend{
+  width: 50%;
+  float: right;
+  height: inherit;
+}
+.panel{
+  height:auto;
+}
+.form_controls_1{
+  width: 50%;
+  min-width: 500px;
+  max-height: 100%;
 }
 .button:active:focus{
   box-shadow: none;
@@ -98,9 +111,8 @@ pre {
     position: absolute;
 }
 #resetButton > .poke_box{
-  left: -100px;
+  left: 100%;
   top: 0px;
-  size: inherit;
 }
 #clearButton > .poke_box{
     left: 100%;
