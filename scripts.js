@@ -101,14 +101,12 @@ function findPokemon() {
 	  pokeSearchString = pokeSearchString.toLowerCase();
   	const pokeTable = document.getElementsByClassName('pokeTable');
     const pokeTableQueryString = '.' + pokeSearchString;
+    
   	if(pokeTableQueryString){
-   		for (let el of document.querySelectorAll(pokeTableQueryString)){
-      	// do search stuff here, will have all elements that MATCH
-        autoScroll();
-    	}
+   		let queryString = document.querySelectorAll(pokeTableQueryString);
+      queryString.forEach(el => el.style.display = "none");
 		}
 	}
-  
 }
 
 function clearPokemon() {
@@ -133,11 +131,11 @@ function clearPokemon() {
           monInstance+=1;
         }
       });
-      changeList.push(pokeSearchString);
+      changeList.push(pokeSearchString+monInstance);
       const cells = document.getElementsByClassName(pokeSearchString+monInstance);
       var cellsArr = Array.prototype.slice.call( cells );
       cellsArr.forEach(cell => {
-        cell.className = 'redLineTable'; // red out removed mons, DONT remove them I think 
+        cell.className = pokeSearchString + monInstance + ' redLineTable'; // red out removed mons, DONT remove them I think 
         //cell.style.display='none';
       });
     }
@@ -150,8 +148,16 @@ function resetTable() {
 	removeButtonShadow('resetButton');
   alert("resetting table!");
   console.log('reset pokemon table click!');
-  document.getElementById('#resetButton').style.boxShadow='0px';
-  document.getElementById('#resetButton').style='';
+  let queryChangeString = document.querySelectorAll('.redLineTable');
+  if(queryChangeString){
+    var cellsArr = Array.prototype.slice.call( queryChangeString );
+    cellsArr.forEach(cell => {
+      let originalMonClass = cell.className;
+      originalMonClass = originalMonClass.substring( 0, originalMonClass.indexOf( "redLineTable" )-1 ); // -1 for the period
+      changeList = changeList.filter(a => a !== originalMonClass);
+      cell.className = originalMonClass; // remove redLineTable class modifier
+    });
+  }
 }
 
 function createTable(result) {
@@ -165,6 +171,7 @@ function createTable(result) {
     headers = result.shift();
     while (result[counter]) {
       var row = tbl.insertRow(counter);
+      row.className = "pokeRow";
       // ignore headers - deal w each pokemon here
       let pkmnData = result[counter] || "";
       let pkmnName = pkmnData[1] || "";
