@@ -1,0 +1,28 @@
+Plans:
+- Feature 1 (table)
+  (table functions)
+    - reset table to base form
+    - store table operations for later reload (cookie? db?)
+    - find mon scrolls to first mon occurence in table
+      - perhaps extend to ignore removed pokemon (class='redLineTable
+  (table sorting)
+    - sort based off each row, currently sorted by instance / raw AI PK
+    - sort by item, pokemon, moves, etc.
+  (table filtering)
+    - remove/hide all instances of a pokemon
+    - unhide all instances of a pokemon
+    - remove hide pokemon based on instance
+      - remove all instance 1 pokemon, but leave their instance 2,3,.....
+- Feature 2(Factory Brain)
+  - create representation / display for Noland (Factory Brain)
+  - make extra cool / fancy
+- Feature 3(calc integrate)
+  - integrate showdown calculator pulling from the datasets existing
+- Feature 3(track round)
+  - self explanatory, for other relevent info like 15 swaps == 1 strong mon
+- Feature 6(???)
+potential future wants
+- Feature 1 (database)
+  - move data from excel into postgresql database
+  - nosql or mysql
+  - improves load times
