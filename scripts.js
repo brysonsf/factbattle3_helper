@@ -6,7 +6,7 @@ let originalTableData;
 const NUM_COLUMNS = 16;
 const NUM_ROWS = 5;
 const END_OF_MONS = 883;
-let round = 1;
+let round = 0;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   // read input and build pokemon data table
@@ -41,10 +41,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       // create table
       originalTableData = result;
       const tbl = createTable(result);
-      const inputToHide = document.getElementById('input-hider');
-      if(inputToHide){
-        inputToHide.parentNode.removeChild(inputToHide);
-      }
+      hideStuff();
+      
       tableLocation.appendChild(tbl);
     }
     FR.readAsArrayBuffer(file);
@@ -197,7 +195,13 @@ function resetTable() {
   tableLocation.removeChild(tableLocation.firstElementChild);
   const newTable = createTable(originalTableData);
   tableLocation.appendChild(newTable);
-
+  if(round<4){
+    hideStuff(); // running this will rehide the pokemon from later rounds
+  }else{  
+    if (confirm("Would you like to keep hiding the mons from later rounds?")){
+      hideStuff();
+    }
+  }
 }
 function createTable(result) {
   let internalResult = result;
@@ -278,21 +282,32 @@ function roundIterator(){
   }else if(round===4){
     alert('Congrats on making round 4! Removing mons that can\'t exist after round 4, and returning the ones who can.');
   }
+  
   if(round<4){
-    postRound4Mons.forEach(preRound4Row => {
-      var row = preRound4Row;
-      preRound4Row.className += " hidden";
-    });
-  } else if(round>=4){
-    preRound4Mons.forEach(postRound4Row => {
+    postRound4Mons.forEach(postRound4Row => {
       var row = postRound4Row;
       postRound4Row.className += " hidden";
     });
-    postRound4Mons.forEach(preRound4Row => {
+  } else if(round>=4){
+    preRound4Mons.forEach(preRound4Row => {
       var row = preRound4Row;
+      preRound4Row.className += " hidden";
+    });
+    postRound4Mons.forEach(postRound4Row => {
+      var row = postRound4Row;
       row.className = row.className.slice(0, row.length-7);
     });
   }
+}
+function hideStuff(){
+  const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
+  postRound4Mons.forEach(postRound4Row => {
+    postRound4Row.className += " hidden";
+  });
+  const inputToHide = document.getElementById('input-hider');
+  if(inputToHide){
+    inputToHide.parentNode.removeChild(inputToHide);
+  } 
 }
 
 function buildBrain(brainData, headers){
