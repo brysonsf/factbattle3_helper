@@ -153,16 +153,22 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ clear ] Feature 1
--- working on showing the user the row being removed
--- adding a live count of each mon when asking
-- [ remove ] Feature 2
--- have the one by one
-    - [ instance tracker ] tracking the instance of mons when needed
-- [ find ] Feature 3
-    - [ ] Nested Feature
-- [ reset ] Feature 4
-
+- [form-controls] Feature 1
+  - remove mons one by one (done)
+  - reset table to orignal form (done)
+  - search for all instances of a mon (done)
+  - search via ability / item / move / category / speed tier (WIP)
+  - display noland data in separate table (done)
+- [ round tracker ] Feature 2
+  - having either
+  - the user increments round when it occurs
+  - or automagically increment after youve seen 7 new pokemon
+    - need to account for the first 6 you see on start of each round
+    - each round will have 6 starting mons, and then 7 teams of 3 mons each. AKA you will see 27 mons a round upond success. 
+- [ category sort ] Feature 2
+  - sort the table based off the categories applicable (refernece data table with moves that trigger)
+  - potentially do it with color coding
+- [] will add features as I recall what I want
 See the [open issues](https://github.com/brysonsf/factbattle3_helper/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -199,7 +205,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@megajointcuck](https://twitter.com/megajointcuck) - brysonsf@gmail.com@brysonsf@gmail.com_client.com
+Bryson Sullivan-Farrell - [@megajointcuck](https://twitter.com/megajointcuck) - brysonsf@gmail.com
 
 Project Link: [https://github.com/brysonsf/factbattle3_helper](https://github.com/brysonsf/factbattle3_helper)
 
