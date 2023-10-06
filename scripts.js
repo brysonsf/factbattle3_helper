@@ -164,7 +164,7 @@ function clearPokemon() {
           monInstance+=1;
         }
       });
-      changeList.push(pokeSearchString+monInstance);
+      changeList.push(pokeSearchString);// no need to track instance, raw count will do
       const cells = document.getElementsByClassName(pokeSearchString+monInstance);
       var cellsArr = Array.prototype.slice.call( cells );
       cellsArr.forEach(cell => {
@@ -217,13 +217,20 @@ function createTable(result) {
       let pokeIndex = pkmnData[0] || "";
       let pkmnName = pkmnData[1] || "";
       let pkmnInstance = pkmnData[2] || "";
+      let className = '';
       row.className = pkmnName.toLowerCase() + " row";
       for (let g = 0; g < NUM_COLUMNS; g++) {
         if (pkmnData[g] == null) {
           pkmnData[g] = "NO DATA";
         }
         // user outerHTML to overwrite td
-        row.insertCell(g).outerHTML = "<td class=" + pkmnName.toLowerCase() + pkmnInstance + ">" + pkmnData[g] + "</td>";
+        className = pkmnName.toLowerCase() + pkmnInstance;
+        if(g===3){
+          className += " " + pkmnData[g];
+        }
+        let cell = row.insertCell(g);
+        cell.innerHTML = pkmnData[g];
+        cell.className = className;
         if (pkmnName !== null) {
           pkmnData[1] = pkmnName || pkmnData[1];
         }
@@ -234,9 +241,7 @@ function createTable(result) {
       }
       counter++;
     }
-    // suicune last pkmn at 882
-  const brainData = result.slice(counter,result.length);
-  buildBrain(brainData, headers);
+
   let firstRow =  tbl.firstElementChild;
   firstRow.removeChild(firstRow.firstElementChild);
   var header = tbl.createTHead();
@@ -245,12 +250,16 @@ function createTable(result) {
     // use of outerHTML is to overwrite the insertCell() effect of creating a <td> instead of the desired <th>
     headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + headers[i] + "</th>";
   }
+  // suicune last pkmn at 882
+  const brainData = result.slice(counter,result.length);
+  buildBrain(brainData, headers);
   return tbl;
   }
 }
 
 function buildBrain(brainData, headers){
   // do stuff wth brain data
+  let brainHeaders = headers;
   /*
   */
   // re-display both the button and div once data loads
@@ -310,14 +319,14 @@ function buildBrain(brainData, headers){
   });
   var header = tbl.createTHead();
   var headerRow = header.insertRow(0);
-  var index = headers.indexOf('Instance');
+  var index = brainHeaders.indexOf('Instance');
   if (index !== -1) {
-    headers.splice(index, 1);
+    brainHeaders.splice(index, 1);
   }
-  for (var i = 0; i < headers.length; i++) {
+  for (var i = 0; i < brainHeaders.length; i++) {
     // use of outerHTML is to overwrite the insertCell() effect of creating a <td> instead of the desired <th>
-    if(headers[i]!=='Instance'){
-      headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + headers[i] + "</th>";
+    if(brainHeaders[i]!=='Instance'){
+      headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + brainHeaders[i] + "</th>";
     }
   }
   let nolandImage = document.getElementById('noland_image');

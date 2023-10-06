@@ -8,6 +8,7 @@ Plans:
   (table sorting)
     - sort based off each row, currently sorted by instance / raw AI PK
     - sort by item, pokemon, moves, etc.
+    - sort by speed tier
   (table filtering)
     - remove/hide all instances of a pokemon
     - unhide all instances of a pokemon
@@ -20,6 +21,8 @@ Plans:
   - integrate showdown calculator pulling from the datasets existing
 - Feature 3(track round)
   - self explanatory, for other relevent info like 15 swaps == 1 strong mon
+  - Feature (switch mons) 
+    - on round 4, switch pokemon view from 0(Sunkern1)-372(Cloyster2) to 373(Dugtrio1)-882(Suicune6)
 - Feature 6(???)
 potential future wants
 - Feature 1 (database)
