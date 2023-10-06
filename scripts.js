@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var file = e.target.files[0];
     // input canceled, return
     if (!file) return;
-
     var FR = new FileReader();
     FR.onload = function(e) {
       var data = new Uint8Array(e.target.result);
@@ -219,18 +218,25 @@ function createTable(result) {
       let pkmnInstance = pkmnData[2] || "";
       let className = '';
       row.className = pkmnName.toLowerCase() + " row";
+      if(counter>=373){
+        className += "roundsOneTwoThree";
+      }else{
+        className += "rounds4AndOn";
+      }
+      className += " " + pkmnName.toLowerCase() + pkmnInstance;
       for (let g = 0; g < NUM_COLUMNS; g++) {
         if (pkmnData[g] == null) {
           pkmnData[g] = "NO DATA";
         }
-        // user outerHTML to overwrite td
-        className = pkmnName.toLowerCase() + pkmnInstance;
-        if(g===3){
-          className += " " + pkmnData[g];
-        }
         let cell = row.insertCell(g);
         cell.innerHTML = pkmnData[g];
         cell.className = className;
+        // add nature to correct cell 
+        if(g===3){
+          className += " " + pkmnData[g];
+          cell.className = className;
+          className = className.slice(0, className.length-pkmnData[g].length);
+        }
         if (pkmnName !== null) {
           pkmnData[1] = pkmnName || pkmnData[1];
         }
@@ -255,6 +261,10 @@ function createTable(result) {
   buildBrain(brainData, headers);
   return tbl;
   }
+}
+
+function roundIterator(){
+  
 }
 
 function buildBrain(brainData, headers){
