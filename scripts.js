@@ -1,9 +1,11 @@
 // Globals
 var pokemonList = [];
 var nameList = [];
+var changeList = [];
+let originalTableData;
 const NUM_COLUMNS = 16;
 const NUM_ROWS = 5;
-var changeList = [];
+const END_OF_MONS = 883;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   // read input and build pokemon data table
@@ -35,9 +37,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if(tableLocation===null || tableLocation === ""){
           console.log("Table location div not found error");
         }
-      }// create table
+      }
+      // create table
+      originalTableData = result;
       const tbl = createTable(result);
-      tbl.className = "table pokemonDisplay";
       const inputToHide = document.getElementById('input-hider');
       if(inputToHide){
         inputToHide.parentNode.removeChild(inputToHide);
@@ -69,13 +72,38 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var content = this.nextElementSibling;
       if (content.style.display === "block") {
         content.style.display = "none";
-        document.getElementById('dataButton').innerHTML = "Show Scientiest Exact Moves";
+        document.getElementById('dataButton').innerHTML = "Show Each Category's Exact Moves";
       } else {
         content.style.display = "block";
-        document.getElementById('dataButton').innerHTML = "Hide Scientist Exact Moves";
+        document.getElementById('dataButton').innerHTML = "Hide Each Category's Exact Moves";
       }
     });
   }
+
+  const nolandFloat = document.getElementById('nolandFloat');
+  if(nolandFloat){
+    nolandFloat.style.display = 'block';
+  }
+
+  const brainButton = document.getElementById('brainButton');
+  const nolandPic = document.getElementById('noland_img');
+  if(brainButton){
+    brainButton.addEventListener("click", function() {
+      var tableContent = brainButton.nextElementSibling;
+      if (tableContent.style.display === "block") {
+        tableContent.style.display = "none";
+        nolandPic.style.display = "none";
+        brainButton.innerHTML = "Show Noland Details";
+      } else {
+        tableContent.style.display = "block";
+        nolandPic.style.display = "block";
+        brainButton.innerHTML = "Hide Noland Details";
+      }
+    });
+  }
+
+  
+
   let searchInput = document.getElementById("pokemon_search");
   let clearInput = document.getElementById("pokemon_clear");
   if(searchInput){
@@ -99,16 +127,19 @@ function findPokemon() {
   	}	
 		alert("finding "+pokeSearchString+" from table");
 	  pokeSearchString = pokeSearchString.toLowerCase();
-  	const pokeTable = document.getElementsByClassName('pokeTable');
     const pokeTableQueryString = '.' + pokeSearchString;
-  	if(pokeTableQueryString){
-   		for (let el of document.querySelectorAll(pokeTableQueryString)){
-      	// do search stuff here, will have all elements that MATCH
-        autoScroll();
-    	}
-		}
-	}
-  
+    
+    let allMonRows = document.querySelectorAll('tr' + pokeTableQueryString); // returns all rows
+    const tableBody = document.querySelector('.pokemonDisplay > tbody');
+    if(allMonRows){
+      allMonRows.forEach(pokemonSearchedRow => {
+          var row = pokemonSearchedRow;
+          //tableBody.firstElementChild.insertBefore(row, null);
+          tableBody.insertBefore( row, tableBody.firstElementChild ); 
+      });
+    }
+  }
+	
 }
 
 function clearPokemon() {
@@ -133,11 +164,11 @@ function clearPokemon() {
           monInstance+=1;
         }
       });
-      changeList.push(pokeSearchString);
+      changeList.push(pokeSearchString);// no need to track instance, raw count will do
       const cells = document.getElementsByClassName(pokeSearchString+monInstance);
       var cellsArr = Array.prototype.slice.call( cells );
       cellsArr.forEach(cell => {
-        cell.className = 'redLineTable'; // red out removed mons, DONT remove them I think 
+        cell.className = pokeSearchString + monInstance + ' redLineTable'; // red out removed mons, DONT remove them I think 
         //cell.style.display='none';
       });
     }
@@ -150,31 +181,56 @@ function resetTable() {
 	removeButtonShadow('resetButton');
   alert("resetting table!");
   console.log('reset pokemon table click!');
-  document.getElementById('#resetButton').style.boxShadow='0px';
-  document.getElementById('#resetButton').style='';
+  // clear the removal styling
+  let queryChangeString = document.querySelectorAll('.redLineTable');
+  if(queryChangeString){
+    var cellsArr = Array.prototype.slice.call( queryChangeString );
+    cellsArr.forEach(cell => {
+      let originalMonClass = cell.className;
+      originalMonClass = originalMonClass.substring( 0, originalMonClass.indexOf( "redLineTable" )-1 ); // -1 for the period
+      changeList = changeList.filter(a => a !== originalMonClass);
+      cell.className = originalMonClass; // remove redLineTable class modifier
+    });
+  }
+  //re-organize by 
+  // 0-15, 16-31, 32-47
+  const tableLocation = document.getElementById('output_table');
+  tableLocation.removeChild(tableLocation.firstElementChild);
+  const newTable = createTable(originalTableData);
+  tableLocation.appendChild(newTable);
+
 }
-
 function createTable(result) {
+  let internalResult = result;
   const tbl = document.createElement('table');
-
+  tbl.className = "table pokemonDisplay";
   var headers;
   var counter = 0;
-
   if (result !== "Sorry no data found") {
     // parse listSorted for pkmn data
-    headers = result.shift();
-    while (result[counter]) {
+    headers = result.at(0); // prevents moving down the list each time you click reset
+    while (result[counter] && counter!==END_OF_MONS) {
+      // 373 -> 882 is open level
       var row = tbl.insertRow(counter);
       // ignore headers - deal w each pokemon here
       let pkmnData = result[counter] || "";
+      let pokeIndex = pkmnData[0] || "";
       let pkmnName = pkmnData[1] || "";
       let pkmnInstance = pkmnData[2] || "";
+      let className = '';
+      row.className = pkmnName.toLowerCase() + " row";
       for (let g = 0; g < NUM_COLUMNS; g++) {
         if (pkmnData[g] == null) {
           pkmnData[g] = "NO DATA";
         }
         // user outerHTML to overwrite td
-        row.insertCell(g).outerHTML = "<td class=" + pkmnName.toLowerCase() + pkmnInstance + ">" + pkmnData[g] + "</td>";
+        className = pkmnName.toLowerCase() + pkmnInstance;
+        if(g===3){
+          className += " " + pkmnData[g];
+        }
+        let cell = row.insertCell(g);
+        cell.innerHTML = pkmnData[g];
+        cell.className = className;
         if (pkmnName !== null) {
           pkmnData[1] = pkmnName || pkmnData[1];
         }
@@ -185,14 +241,100 @@ function createTable(result) {
       }
       counter++;
     }
-  }
+
+  let firstRow =  tbl.firstElementChild;
+  firstRow.removeChild(firstRow.firstElementChild);
   var header = tbl.createTHead();
   var headerRow = header.insertRow(0);
   for (var i = 0; i < headers.length; i++) {
     // use of outerHTML is to overwrite the insertCell() effect of creating a <td> instead of the desired <th>
     headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + headers[i] + "</th>";
   }
+  // suicune last pkmn at 882
+  const brainData = result.slice(counter,result.length);
+  buildBrain(brainData, headers);
   return tbl;
+  }
+}
+
+function buildBrain(brainData, headers){
+  // do stuff wth brain data
+  let brainHeaders = headers;
+  /*
+  */
+  // re-display both the button and div once data loads
+  let brainButton= document.getElementById('brainButton');
+  let nolandDiv= document.getElementById('nolan_brain');
+  if(brainButton){
+    brainButton.style.display='block';
+  }
+  if(nolandDiv){
+    nolandDiv.style.display='block';
+  }
+  
+  const tbl = document.createElement('table');
+  tbl.className = "table nolandDisplay";
+  let counter = 0;
+  brainData.forEach(rowData => {
+    var row = tbl.insertRow(counter);
+    if(rowData && rowData!==null & rowData!=''){
+      let name = rowData[0]; // always Noland Silver / Gold
+      console.log(name);
+      if(name==='Noland Silver†' || name==='Noland Gold†'){
+        let pkName = rowData[1];
+        // rowData[2] always null
+        let nature = rowData[3];
+        let item = rowData[4];
+        let move1 = rowData[5];
+        let move2 = rowData[6];
+        let move3 = rowData[7];
+        let move4 = rowData[8];
+        let ability = rowData[9];
+        let EVSpread = rowData[10];
+        let stats100 = rowData[11];
+        let spd100 = rowData[12];
+        let stats50 = rowData[13];
+        let spd50 = rowData[14];
+        let IVs = rowData[15];
+        // user outerHTML to overwrite td
+        row.insertCell(-1).outerHTML = "<td class=" + name + ">" + name + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + pkName + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + nature + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + item + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move1 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move2 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move3 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move4 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + ability + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + EVSpread + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + stats100 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + spd100 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + stats50 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + spd50 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + IVs + "</td>";
+      }
+      console.log(row);
+    }
+    counter++;
+  });
+  var header = tbl.createTHead();
+  var headerRow = header.insertRow(0);
+  var index = brainHeaders.indexOf('Instance');
+  if (index !== -1) {
+    brainHeaders.splice(index, 1);
+  }
+  for (var i = 0; i < brainHeaders.length; i++) {
+    // use of outerHTML is to overwrite the insertCell() effect of creating a <td> instead of the desired <th>
+    if(brainHeaders[i]!=='Instance'){
+      headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + brainHeaders[i] + "</th>";
+    }
+  }
+  let nolandImage = document.getElementById('noland_image');
+  let noland_brain = document.getElementById('noland_brain');
+  const newNode = document.createElement("div");
+  newNode.className = 'content';
+  newNode.appendChild(tbl, nolandImage);
+  noland_brain.insertBefore(newNode, noland_brain.children[1]);
 }
 
 function removeSection() {
