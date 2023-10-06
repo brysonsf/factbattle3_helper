@@ -97,41 +97,24 @@
           </tbody>
         </table>
       </div>
-      <div class="floating">
+      <div class="floating" id="nolandFloat">
         <div class = "panel-block" style="border:0px;">
           <div id="noland_brain" class="box brain">
-            <button type="button" id="brainButton" class="collapsible">Show Noland Details</button>
-            <table id="brainContent" class="content table is-striped">
-              <thead>
-                <tr>
-                  <td>NOLAND</td>
-                  <td>atk</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>pokemon 1</td>
-                  <td>151 attack</td>
-                </tr>
-                <tr>
-                  <td>pokemon 2</td>
-                  <td>100 attack</td>
-                </tr>
-                <tr>
-                  <td>pokemon 3</td>
-                  <td>61 attack</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="content">
-              <img id="noland_img" src='https://static.wikia.nocookie.net/pokemon/images/a/a3/Emerald_Factory_Head_Noland.png/revision/latest/scale-to-width-down/248?cb=20151220154354' alt='Factory Brain Noland' style="width: 248px; height: 499px">
-
-            </div>
-          
-            </div>
+            <button type="button" id="brainButton" class="collapsible">Show Noland Details</button>         
+            <img id="noland_img" src='https://static.wikia.nocookie.net/pokemon/images/a/a3/Emerald_Factory_Head_Noland.png/revision/latest/scale-to-width-down/248?cb=20151220154354' alt='Factory Brain Noland' style="width: 248px; height: 499px">
+          </div>
+        </div>
+        <div class="panel-block">
+          <h3 style="border-top: 1px dotted grey; color: red;" >WARNING </h3>
+            <p><strong>Factory Head Noland</strong> will select his pokemon from:</p>
+            <p style="border: 1px dotted grey;">
+              <strong>(pokemon 0 -> 372)</strong> from <em>(rounds 1 -> 3)</em>
+            </p>
+            <p style="border: 1px dotted grey;">
+              <strong>(pokemon 373 -> 882)</strong> from <em>(rounds 4 -> onward)</em>
+            </p>
         </div>
         <!-- Section for data -> raw moves that will trigger categories  -->
-       
       </div>
     </div>
     
@@ -216,10 +199,19 @@
 
     <div class="floating">
       <div class="panel-block">
-        When you swap, you will be swapping for a Pokémon with IVs of 3
+        Generally players consider <strong>level 50</strong> the better category for <strong>high-round runs</strong>. 
+      </div>
+      <div class="panel-block">
+        Each round is 7 battles with 6 opportunities to switch. (you dont swap after the last battle each round, obviously)
+      </div>
+      <div class="panel-block">
+        When you swap, you will be swapping for a Pokémon with IVs of 3.
       </div>
       <div class="panel-block">
         if you swap at least 15 Pokémon, you will get a Pokémon that would otherwise only be accessible a round after your current round
+      </div>
+      <div class="panel-block">
+        after winning 3 rounds in the level 50 category, the pokemon source from the open level category (pokemon373[Dugtrio1] -> pokemon882[Suicune6])
       </div>
     </div>
     

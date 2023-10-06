@@ -6,8 +6,12 @@
   width: 50%;
   float: right;
 }
-#noland_brain{
+#noland_img{
   display: none;
+  left: 250px;;
+}
+#noland_brain{
+  width: 100%;
 }
 .panel{
   height:auto;
@@ -55,11 +59,19 @@ pre {
 
 .table{
   border-spacing: 0px;
-  width: 100%;
 }
 .pokemonDisplay {
   overflow-y: scroll;
   height: 500px;
+  display: block;
+  border: 1px dashed red;
+  margin-top: 1%;
+  padding: 2px;
+}
+.nolandDisplay {
+  overflow-y: scroll;
+  height: 350px;
+  max-width: 100%;
   display: block;
   border: 1px dashed red;
   margin-top: 1%;

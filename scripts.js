@@ -80,25 +80,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
   }
 
+  const nolandFloat = document.getElementById('nolandFloat');
+  if(nolandFloat){
+    nolandFloat.style.display = 'block';
+  }
 
   const brainButton = document.getElementById('brainButton');
-  const nolandImage = document.getElementById('noland_img');
-  if(brainButton && nolandImage){
+  const nolandPic = document.getElementById('noland_img');
+  if(brainButton){
     brainButton.addEventListener("click", function() {
-      this.classList.toggle("active");
-      var tableContent = this.nextElementSibling;
-      var nolandImage = tableContent.nextElementSibling;
+      var tableContent = brainButton.nextElementSibling;
       if (tableContent.style.display === "block") {
         tableContent.style.display = "none";
-        nolandImage.style.display = "none";
+        nolandPic.style.display = "none";
         brainButton.innerHTML = "Show Noland Details";
       } else {
         tableContent.style.display = "block";
-        nolandImage.style.display = "block";
+        nolandPic.style.display = "block";
         brainButton.innerHTML = "Hide Noland Details";
       }
-    });  
+    });
   }
+
+  
 
   let searchInput = document.getElementById("pokemon_search");
   let clearInput = document.getElementById("pokemon_clear");
@@ -206,8 +210,7 @@ function createTable(result) {
     // parse listSorted for pkmn data
     headers = result.at(0); // prevents moving down the list each time you click reset
     while (result[counter] && counter!==END_OF_MONS) {
-      // break at brains to account for Noland data
-      // create table for noland to display in content
+      // 373 -> 882 is open level
       var row = tbl.insertRow(counter);
       // ignore headers - deal w each pokemon here
       let pkmnData = result[counter] || "";
@@ -233,7 +236,7 @@ function createTable(result) {
     }
     // suicune last pkmn at 882
   const brainData = result.slice(counter,result.length);
-  buildBrain(brainData);
+  buildBrain(brainData, headers);
   let firstRow =  tbl.firstElementChild;
   firstRow.removeChild(firstRow.firstElementChild);
   var header = tbl.createTHead();
@@ -246,46 +249,83 @@ function createTable(result) {
   }
 }
 
-function buildBrain(brainData){
+function buildBrain(brainData, headers){
   // do stuff wth brain data
-  brainButton = document.getElementById('noland_brain');
-  brainButton.style.display='block';
+  /*
+  */
+  // re-display both the button and div once data loads
+  let brainButton= document.getElementById('brainButton');
+  let nolandDiv= document.getElementById('nolan_brain');
+  if(brainButton){
+    brainButton.style.display='block';
+  }
+  if(nolandDiv){
+    nolandDiv.style.display='block';
+  }
+  
+  const tbl = document.createElement('table');
+  tbl.className = "table nolandDisplay";
+  let counter = 0;
   brainData.forEach(rowData => {
+    var row = tbl.insertRow(counter);
     if(rowData && rowData!==null & rowData!=''){
-      console.log(rowData);
       let name = rowData[0]; // always Noland Silver / Gold
-      // rowData[2] always null
-      rowData.forEach(cellData => {
-        if(cellData == '†Noland Silver' || cellData == '†Noland Gold'){
-          let contentBlock = document.getElementById('brainContent');
-          contentBlock.innerHTML = ""
-          
-/*
-
-[
-    "Noland Silver†",
-    "Aggron",
-    null,
-    "Adamant",
-    "Sitrus Berry",
-    "Thunderbolt",
-    "Protect",
-    "SolarBeam",
-    "Dragon Claw",
-    "Sturdy / Rock Head",
-    " 0 /252/ 0 /252/ 6 / 0  ",
-    "281/350/396/197/157/136",
-    136,
-    "145/178/200/100/81/70",
-    70,
-    31
-]
-
-*/
-        }
-      });
+      console.log(name);
+      if(name==='Noland Silver†' || name==='Noland Gold†'){
+        let pkName = rowData[1];
+        // rowData[2] always null
+        let nature = rowData[3];
+        let item = rowData[4];
+        let move1 = rowData[5];
+        let move2 = rowData[6];
+        let move3 = rowData[7];
+        let move4 = rowData[8];
+        let ability = rowData[9];
+        let EVSpread = rowData[10];
+        let stats100 = rowData[11];
+        let spd100 = rowData[12];
+        let stats50 = rowData[13];
+        let spd50 = rowData[14];
+        let IVs = rowData[15];
+        // user outerHTML to overwrite td
+        row.insertCell(-1).outerHTML = "<td class=" + name + ">" + name + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + pkName + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + nature + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + item + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move1 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move2 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move3 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + move4 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + ability + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + EVSpread + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + stats100 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + spd100 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + stats50 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + spd50 + "</td>";
+        row.insertCell(-1).outerHTML = "<td>" + IVs + "</td>";
+      }
+      console.log(row);
     }
+    counter++;
   });
+  var header = tbl.createTHead();
+  var headerRow = header.insertRow(0);
+  var index = headers.indexOf('Instance');
+  if (index !== -1) {
+    headers.splice(index, 1);
+  }
+  for (var i = 0; i < headers.length; i++) {
+    // use of outerHTML is to overwrite the insertCell() effect of creating a <td> instead of the desired <th>
+    if(headers[i]!=='Instance'){
+      headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + headers[i] + "</th>";
+    }
+  }
+  let nolandImage = document.getElementById('noland_image');
+  let noland_brain = document.getElementById('noland_brain');
+  const newNode = document.createElement("div");
+  newNode.className = 'content';
+  newNode.appendChild(tbl, nolandImage);
+  noland_brain.insertBefore(newNode, noland_brain.children[1]);
 }
 
 function removeSection() {
