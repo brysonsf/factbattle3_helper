@@ -9,7 +9,7 @@ Plans:
     - sort based off each row, currently sorted by instance / raw AI PK
     - sort by item, pokemon, moves, etc.
     - sort by speed tier
-  (table filtering)
+  (table filtering) TESTsqwerqerqwerqwr
     - remove/hide all instances of a pokemon
     - unhide all instances of a pokemon
     - remove hide pokemon based on instance

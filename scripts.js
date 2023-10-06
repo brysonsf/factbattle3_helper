@@ -6,6 +6,7 @@ let originalTableData;
 const NUM_COLUMNS = 16;
 const NUM_ROWS = 5;
 const END_OF_MONS = 883;
+let round = 0;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   // read input and build pokemon data table
@@ -13,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var file = e.target.files[0];
     // input canceled, return
     if (!file) return;
-
     var FR = new FileReader();
     FR.onload = function(e) {
       var data = new Uint8Array(e.target.result);
@@ -27,8 +27,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var result = XLSX.utils.sheet_to_json(firstSheet, {
         header: 1
       });
-      // console.log(result[1]); this is Sunkern
-
       // create body
       var tableLocation;
       try {
@@ -41,10 +39,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       // create table
       originalTableData = result;
       const tbl = createTable(result);
-      const inputToHide = document.getElementById('input-hider');
-      if(inputToHide){
-        inputToHide.parentNode.removeChild(inputToHide);
-      }
+      hideStuff();
+      
       tableLocation.appendChild(tbl);
     }
     FR.readAsArrayBuffer(file);
@@ -79,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     });
   }
-
   const nolandFloat = document.getElementById('nolandFloat');
   if(nolandFloat){
     nolandFloat.style.display = 'block';
@@ -118,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 // pokemon search function
 function findPokemon() {
 	removeButtonShadow('findButton');
-  console.log('find pokemon click!')
   const searchBlock = document.getElementById('pokemon_search');
   if(searchBlock){
   	let pokeSearchString = searchBlock.value;
@@ -144,7 +138,6 @@ function findPokemon() {
 
 function clearPokemon() {
 	removeButtonShadow('clearButton');
-	console.log('remove pokemon click!');
   const clearBlock = document.getElementById('pokemon_clear');
   if(clearBlock){
     let pokeSearchString = clearBlock.value;
@@ -179,8 +172,6 @@ function clearPokemon() {
 
 function resetTable() {
 	removeButtonShadow('resetButton');
-  alert("resetting table!");
-  console.log('reset pokemon table click!');
   // clear the removal styling
   let queryChangeString = document.querySelectorAll('.redLineTable');
   if(queryChangeString){
@@ -198,7 +189,13 @@ function resetTable() {
   tableLocation.removeChild(tableLocation.firstElementChild);
   const newTable = createTable(originalTableData);
   tableLocation.appendChild(newTable);
-
+  if(round<4){
+    hideStuff(); // running this will rehide the pokemon from later rounds
+  }else{  
+    if (confirm("Would you like to keep hiding the mons from later rounds?")){
+      hideStuff();
+    }
+  }
 }
 function createTable(result) {
   let internalResult = result;
@@ -218,19 +215,27 @@ function createTable(result) {
       let pkmnName = pkmnData[1] || "";
       let pkmnInstance = pkmnData[2] || "";
       let className = '';
-      row.className = pkmnName.toLowerCase() + " row";
+      if(counter<=372){
+        row.className = "roundsOneTwoThree ";
+      }else{
+        row.className = "rounds4AndOn ";
+      }
+      row.className += pkmnName.toLowerCase() + " row";
+      
+      className += " " + pkmnName.toLowerCase() + pkmnInstance;
       for (let g = 0; g < NUM_COLUMNS; g++) {
         if (pkmnData[g] == null) {
           pkmnData[g] = "NO DATA";
         }
-        // user outerHTML to overwrite td
-        className = pkmnName.toLowerCase() + pkmnInstance;
-        if(g===3){
-          className += " " + pkmnData[g];
-        }
         let cell = row.insertCell(g);
         cell.innerHTML = pkmnData[g];
         cell.className = className;
+        // add nature to correct cell 
+        if(g===3){
+          className += " " + pkmnData[g];
+          cell.className = className;
+          className = className.slice(0, className.length-pkmnData[g].length);
+        }
         if (pkmnName !== null) {
           pkmnData[1] = pkmnName || pkmnData[1];
         }
@@ -250,11 +255,63 @@ function createTable(result) {
     // use of outerHTML is to overwrite the insertCell() effect of creating a <td> instead of the desired <th>
     headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + headers[i] + "</th>";
   }
+  // query selector not get element cause its not on screen? wasnt working with getElement
+
+  let controls = document.getElementsByClassName('form_controls_1');
+  if (controls){
+    var controlArray = Array.prototype.slice.call( controls )
+    controlArray.forEach(element => {
+      element.style.display="block";
+    });
+  }
+
   // suicune last pkmn at 882
   const brainData = result.slice(counter,result.length);
   buildBrain(brainData, headers);
   return tbl;
   }
+}
+
+function roundIterator(){
+  removeButtonShadow('roundIteratorButton');
+  round+=1;
+  let iteratorLabel = document.getElementById('iteratorLabel');
+  iteratorLabel.innerText = 'Click here when you finish round ' + round + "!";
+  // deal with the round iteration here by hiding rows up to 372 
+  const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
+  const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
+
+  if(round===1){
+    alert('starting the round iteration! Removing mons that can\'t exist before round 4.');
+  }else if(round===4){
+    alert('Congrats on making round 4! Removing mons that can\'t exist after round 4, and returning the ones who can.');
+  }
+  
+  if(round<4){
+    postRound4Mons.forEach(postRound4Row => {
+      var row = postRound4Row;
+      postRound4Row.className += " hidden";
+    });
+  } else if(round>=4){
+    preRound4Mons.forEach(preRound4Row => {
+      var row = preRound4Row;
+      preRound4Row.className += " hidden";
+    });
+    postRound4Mons.forEach(postRound4Row => {
+      var row = postRound4Row;
+      row.className = row.className.slice(0, row.length-7);
+    });
+  }
+}
+function hideStuff(){
+  const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
+  postRound4Mons.forEach(postRound4Row => {
+    postRound4Row.className += " hidden";
+  });
+  const inputToHide = document.getElementById('input-hider');
+  if(inputToHide){
+    inputToHide.parentNode.removeChild(inputToHide);
+  } 
 }
 
 function buildBrain(brainData, headers){
@@ -279,7 +336,6 @@ function buildBrain(brainData, headers){
     var row = tbl.insertRow(counter);
     if(rowData && rowData!==null & rowData!=''){
       let name = rowData[0]; // always Noland Silver / Gold
-      console.log(name);
       if(name==='Noland Silver†' || name==='Noland Gold†'){
         let pkName = rowData[1];
         // rowData[2] always null
@@ -313,7 +369,6 @@ function buildBrain(brainData, headers){
         row.insertCell(-1).outerHTML = "<td>" + spd50 + "</td>";
         row.insertCell(-1).outerHTML = "<td>" + IVs + "</td>";
       }
-      console.log(row);
     }
     counter++;
   });

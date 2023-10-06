@@ -17,9 +17,10 @@
   height:auto;
 }
 .form_controls_1{
-  width: 50%;
+  width: 100%;
   min-width: 500px;
   max-height: 100%;
+  display: none;
 }
 .button:active:focus{
   box-shadow: none;
@@ -118,7 +119,7 @@ pre {
 }
 
 /* Pokeball stuffs */
-#resetButton, #findButton, #clearButton{
+#resetButton, #findButton, #clearButton, #roundIteratorButton{
   border: 0;
   size: inherit;
 }
@@ -127,15 +128,22 @@ pre {
 }
 #resetButton > .poke_box{
   left: 100%;
-  top: 0px;
+  top: 5px;
+}
+#roundIteratorButton > .poke_box{
+  left: 100%;
+  top: 0px; 
 }
 #clearButton > .poke_box{
-    left: 100%;
+  left: 100%;
   top: 0px;
 }
 #findButton > .poke_box{
   left: 100%;
   top: 5px;
+}
+.hidden{
+  display: none;
 }
 .pokeball{
     position: relative;
