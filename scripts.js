@@ -82,16 +82,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
   const brainButton = document.getElementById('brainButton');
-  if(brainButton){
+  const nolandImage = document.getElementById('noland_img');
+  if(brainButton && nolandImage){
     brainButton.addEventListener("click", function() {
       this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.display === "block") {
-        content.style.display = "none";
-        document.getElementById('brainButton').innerHTML = "Show Noland Details";
+      var tableContent = this.nextElementSibling;
+      var nolandImage = tableContent.nextElementSibling;
+      if (tableContent.style.display === "block") {
+        tableContent.style.display = "none";
+        nolandImage.style.display = "none";
+        brainButton.innerHTML = "Show Noland Details";
       } else {
-        content.style.display = "block";
-        document.getElementById('brainButton').innerHTML = "Hide Noland Details";
+        tableContent.style.display = "block";
+        nolandImage.style.display = "block";
+        brainButton.innerHTML = "Hide Noland Details";
       }
     });  
   }
@@ -253,6 +257,9 @@ function buildBrain(brainData){
       // rowData[2] always null
       rowData.forEach(cellData => {
         if(cellData == '†Noland Silver' || cellData == '†Noland Gold'){
+          let contentBlock = document.getElementById('brainContent');
+          contentBlock.innerHTML = ""
+          
 /*
 
 [

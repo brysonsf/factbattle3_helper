@@ -5,7 +5,6 @@
 .floating{
   width: 50%;
   float: right;
-  height: inherit;
 }
 #noland_brain{
   display: none;
