@@ -6,6 +6,7 @@ let originalTableData;
 const NUM_COLUMNS = 16;
 const NUM_ROWS = 5;
 const END_OF_MONS = 883;
+let round = 1;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   // read input and build pokemon data table
@@ -78,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     });
   }
-
   const nolandFloat = document.getElementById('nolandFloat');
   if(nolandFloat){
     nolandFloat.style.display = 'block';
@@ -264,7 +264,10 @@ function createTable(result) {
 }
 
 function roundIterator(){
-  
+  removeButtonShadow('roundIteratorButton');
+  round+=1;
+  let iteratorLabel = document.getElementById('iteratorLabel');
+  iteratorLabel.innerText = 'Click here when you start round ' + round + "!";
 }
 
 function buildBrain(brainData, headers){
