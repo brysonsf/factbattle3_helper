@@ -1,10 +1,11 @@
 // Globals
 var pokemonList = [];
 var nameList = [];
-const NUM_COLUMNS = 16;
-const NUM_ROWS = 5;
 var changeList = [];
 let originalTableData;
+const NUM_COLUMNS = 16;
+const NUM_ROWS = 5;
+const END_OF_MONS = 883;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   // read input and build pokemon data table
@@ -71,13 +72,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var content = this.nextElementSibling;
       if (content.style.display === "block") {
         content.style.display = "none";
-        document.getElementById('dataButton').innerHTML = "Show Scientiest Exact Moves";
+        document.getElementById('dataButton').innerHTML = "Show Each Category's Exact Moves";
       } else {
         content.style.display = "block";
-        document.getElementById('dataButton').innerHTML = "Hide Scientist Exact Moves";
+        document.getElementById('dataButton').innerHTML = "Hide Each Category's Exact Moves";
       }
     });
   }
+
+
+  const brainButton = document.getElementById('brainButton');
+  if(brainButton){
+    brainButton.addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        document.getElementById('brainButton').innerHTML = "Show Noland Details";
+      } else {
+        content.style.display = "block";
+        document.getElementById('brainButton').innerHTML = "Hide Noland Details";
+      }
+    });  
+  }
+
   let searchInput = document.getElementById("pokemon_search");
   let clearInput = document.getElementById("pokemon_clear");
   if(searchInput){
@@ -174,18 +192,18 @@ function resetTable() {
   tableLocation.appendChild(newTable);
 
 }
-let pokeOrder;
 function createTable(result) {
   let internalResult = result;
   const tbl = document.createElement('table');
   tbl.className = "table pokemonDisplay";
   var headers;
   var counter = 0;
-
   if (result !== "Sorry no data found") {
     // parse listSorted for pkmn data
     headers = result.at(0); // prevents moving down the list each time you click reset
-    while (result[counter]) {
+    while (result[counter] && counter!==END_OF_MONS) {
+      // break at brains to account for Noland data
+      // create table for noland to display in content
       var row = tbl.insertRow(counter);
       // ignore headers - deal w each pokemon here
       let pkmnData = result[counter] || "";
@@ -209,7 +227,9 @@ function createTable(result) {
       }
       counter++;
     }
-  }
+    // suicune last pkmn at 882
+  const brainData = result.slice(counter,result.length);
+  buildBrain(brainData);
   let firstRow =  tbl.firstElementChild;
   firstRow.removeChild(firstRow.firstElementChild);
   var header = tbl.createTHead();
@@ -219,6 +239,46 @@ function createTable(result) {
     headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + headers[i] + "</th>";
   }
   return tbl;
+  }
+}
+
+function buildBrain(brainData){
+  // do stuff wth brain data
+  brainButton = document.getElementById('noland_brain');
+  brainButton.style.display='block';
+  brainData.forEach(rowData => {
+    if(rowData && rowData!==null & rowData!=''){
+      console.log(rowData);
+      let name = rowData[0]; // always Noland Silver / Gold
+      // rowData[2] always null
+      rowData.forEach(cellData => {
+        if(cellData == '†Noland Silver' || cellData == '†Noland Gold'){
+/*
+
+[
+    "Noland Silver†",
+    "Aggron",
+    null,
+    "Adamant",
+    "Sitrus Berry",
+    "Thunderbolt",
+    "Protect",
+    "SolarBeam",
+    "Dragon Claw",
+    "Sturdy / Rock Head",
+    " 0 /252/ 0 /252/ 6 / 0  ",
+    "281/350/396/197/157/136",
+    136,
+    "145/178/200/100/81/70",
+    70,
+    31
+]
+
+*/
+        }
+      });
+    }
+  });
 }
 
 function removeSection() {

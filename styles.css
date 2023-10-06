@@ -2,12 +2,14 @@
 .label{
   width: 300px;
 }
-.legend{
+.floating{
   width: 50%;
   float: right;
   height: inherit;
 }
-
+#noland_brain{
+  display: none;
+}
 .panel{
   height:auto;
 }
@@ -36,6 +38,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  width: 50%;
 }
 
 .search,

@@ -32,7 +32,7 @@
       <input type="file" id="input" accept=".xls,.xlsx,.ods" />
     </div>
 
-    <div class="panel-block">
+    <div class="panel-block" style="border-bottom: 0px;">
       <!-- Section for  quotes -> general guidelines from reddit -->
       <div id="scientist-quotes-tips" class="box tips">
         <button type="button" id="tipButton" class="collapsible">Show Tips on Scientist Quotes</button>
@@ -97,12 +97,40 @@
           </tbody>
         </table>
       </div>
+      <div class="floating panel-block" style="border: 0px;">
+        <!-- Section for data -> raw moves that will trigger categories  -->
+        <div id="noland_brain" class="box brain">
+          <button type="button" id="brainButton" class="collapsible">Show Noland Details</button>
+          <table id="brainContent" class="content table is-striped">
+            <thead>
+              <tr>
+                <td>NOLAND</td>
+                <td>atk</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>pokemon 1</td>
+                <td>151 attack</td>
+              </tr>
+              <tr>
+                <td>pokemon 2</td>
+                <td>100 attack</td>
+              </tr>
+              <tr>
+                <td>pokemon 3</td>
+                <td>61 attack</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     
     <div class="panel-block">
       <!-- Section for data -> raw moves that will trigger categories  -->
       <div id="scientist-quotes-data" class="box data">
-        <button type="button" id="dataButton" class="collapsible">Show Scientist Exact Moves</button>
+        <button type="button" id="dataButton" class="collapsible">Show Each Category's Exact Moves</button>
         <table id="dataContent" class="table is-striped content">
           <thead>
             <tr>
@@ -177,9 +205,14 @@
         </table>
       </div>
     </div>
-    <div class="legend panel-block">
-      LEGEND
+
+    <div class="floating panel-block">
+      When you swap, you will be swapping for a Pokémon with IVs of 3
+      <br />
+      if you swap at least 15 Pokémon, you will get a Pokémon that would otherwise only be accessible a round after your current round
+    
     </div>
+    
     <div class="form_controls_1">
       <div class="panel-block">
         <form autocomplete="off">
