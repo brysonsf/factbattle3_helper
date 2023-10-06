@@ -20,6 +20,7 @@
   width: 100%;
   min-width: 500px;
   max-height: 100%;
+  display: none;
 }
 .button:active:focus{
   box-shadow: none;

@@ -27,8 +27,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var result = XLSX.utils.sheet_to_json(firstSheet, {
         header: 1
       });
-      // console.log(result[1]); this is Sunkern
-
       // create body
       var tableLocation;
       try {
@@ -115,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 // pokemon search function
 function findPokemon() {
 	removeButtonShadow('findButton');
-  console.log('find pokemon click!')
   const searchBlock = document.getElementById('pokemon_search');
   if(searchBlock){
   	let pokeSearchString = searchBlock.value;
@@ -141,7 +138,6 @@ function findPokemon() {
 
 function clearPokemon() {
 	removeButtonShadow('clearButton');
-	console.log('remove pokemon click!');
   const clearBlock = document.getElementById('pokemon_clear');
   if(clearBlock){
     let pokeSearchString = clearBlock.value;
@@ -176,8 +172,6 @@ function clearPokemon() {
 
 function resetTable() {
 	removeButtonShadow('resetButton');
-  alert("resetting table!");
-  console.log('reset pokemon table click!');
   // clear the removal styling
   let queryChangeString = document.querySelectorAll('.redLineTable');
   if(queryChangeString){
@@ -261,6 +255,16 @@ function createTable(result) {
     // use of outerHTML is to overwrite the insertCell() effect of creating a <td> instead of the desired <th>
     headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + headers[i] + "</th>";
   }
+  // query selector not get element cause its not on screen? wasnt working with getElement
+
+  let controls = document.getElementsByClassName('form_controls_1');
+  if (controls){
+    var controlArray = Array.prototype.slice.call( controls )
+    controlArray.forEach(element => {
+      element.style.display="block";
+    });
+  }
+
   // suicune last pkmn at 882
   const brainData = result.slice(counter,result.length);
   buildBrain(brainData, headers);
@@ -272,12 +276,12 @@ function roundIterator(){
   removeButtonShadow('roundIteratorButton');
   round+=1;
   let iteratorLabel = document.getElementById('iteratorLabel');
-  iteratorLabel.innerText = 'Click here when you start round ' + round + "!";
+  iteratorLabel.innerText = 'Click here when you finish round ' + round + "!";
   // deal with the round iteration here by hiding rows up to 372 
   const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
   const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
 
-  if(round===2){
+  if(round===1){
     alert('starting the round iteration! Removing mons that can\'t exist before round 4.');
   }else if(round===4){
     alert('Congrats on making round 4! Removing mons that can\'t exist after round 4, and returning the ones who can.');
@@ -332,7 +336,6 @@ function buildBrain(brainData, headers){
     var row = tbl.insertRow(counter);
     if(rowData && rowData!==null & rowData!=''){
       let name = rowData[0]; // always Noland Silver / Gold
-      console.log(name);
       if(name==='Noland Silver†' || name==='Noland Gold†'){
         let pkName = rowData[1];
         // rowData[2] always null
@@ -366,7 +369,6 @@ function buildBrain(brainData, headers){
         row.insertCell(-1).outerHTML = "<td>" + spd50 + "</td>";
         row.insertCell(-1).outerHTML = "<td>" + IVs + "</td>";
       }
-      console.log(row);
     }
     counter++;
   });
