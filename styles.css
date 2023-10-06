@@ -141,6 +141,9 @@ pre {
   left: 100%;
   top: 5px;
 }
+.hidden{
+  display: none;
+}
 .pokeball{
     position: relative;
     width: 100px;
