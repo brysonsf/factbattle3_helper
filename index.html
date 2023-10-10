@@ -205,6 +205,9 @@
         Each round is 7 battles with 6 opportunities to switch. (you dont swap after the last battle each round, obviously)
       </div>
       <div class="panel-block">
+        you will see <strong>&nbsp;27 pokemon a round&nbsp;</strong> upon success. 6 at the start, 3 each battle.
+      </div>
+      <div class="panel-block">
         When you swap, you will be swapping for a Pokémon with IVs of 3.
       </div>
       <div class="panel-block">
@@ -242,24 +245,13 @@
       </button>  
     </div>
 
-    <div class="panel-block">
-      <form autocomplete="off">
-        <div class="autocomplete" style="width:300px;">
-          <input type="search" id="pokemon_clear" name="pokemon_clear" class="input is-rounded" placeholder="Remove Pokemon..." />
-        </div>
-      </form>
-      <button id="clearButton" onclick="clearPokemon()" class="button is-large">
-        <div class="poke_box">
-          <div class="pokeball">
-            <div class="pokeball__button"></div>
-          </div>   
-        </div>
-      </button>
-    <div style="float: right;">
-      <div class="panel-block" style="margin-left: 50%; width: 150%;">
-        <label for="pokemon_reset" class="label">Reset the pokemon table to default</label>
-          
-        <button id="resetButton" onclick="resetTable()" class="button is-large">
+      <div class="panel-block">
+        <form autocomplete="off">
+          <div class="autocomplete" style="width:300px;">
+            <input type="search" id="pokemon_clear" name="pokemon_clear" class="input is-rounded" placeholder="Remove Pokemon..." />
+          </div>
+        </form>
+        <button id="clearButton" onclick="clearPokemon()" class="button is-large">
           <div class="poke_box">
             <div class="pokeball">
               <div class="pokeball__button"></div>
@@ -267,7 +259,7 @@
           </div>
         </button>
       </div>
-      <div class="panel-block" style="margin-left:50%; width: 150%;">
+      <div class="panel-block" style="width: 25%;">
         <label id="iteratorLabel" for="pokemon_round" class="label">Round 0!! Click here when you start the game!</label> 
         <button id="roundIteratorButton" onclick="roundIterator()" class="button is-large">
           <div class="poke_box">
@@ -277,8 +269,48 @@
           </div>
         </button>
       </div>
+      <div class="panel-block">
+        <div class="resetDiv">
+          <label id="resetLabel" for="pokemon_reset" class="label">Reset the pokemon table to default</label>
+            
+          <button id="resetButton" onclick="resetTable()" class="button is-large">
+            <div class="poke_box">
+              <div class="pokeball">
+                <div class="pokeball__button"></div>
+              </div>   
+            </div>
+          </button>
+        </div>
+      <div class="floating changeView" style="border-right: none;">
+        <label id="changeViewLabel" for="changeViewButtonAll" class="label">Cycle the view: <p id="viewIndicatorAll">ALL</p> / <p id="viewIndicator1">Rounds 1-4</p> / <p id="viewIndicator4">Rounds 4 and on</p></label>
+        <button id="changeViewButtonAll" onclick="changeView('all')" class="button is-large">
+          <div class="poke_box">
+            <div class="pokeball">
+              <div class="pokeball__button"></div>
+            </div>   
+          </div>
+        </button>
+        
+        <div style="border: none; display: inline;">
+          <button id="changeViewButton1" onclick="changeView('1')" class="button is-large">
+            <div class="poke_box">
+              <div class="pokeball">
+                <div class="pokeball__button"></div>
+              </div>   
+            </div>
+          </button>
+        </div>
+        <div style="border: none; display: inline;">
+          <button id="changeViewButton4" onclick="changeView('4')" class="button is-large">
+            <div class="poke_box">
+              <div class="pokeball">
+                <div class="pokeball__button"></div>
+              </div>   
+            </div>
+          </button>
+        </div>
+      </div>
     </div>
-    
   </div>
   </div>
   <div id="output_table">
