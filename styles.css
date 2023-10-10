@@ -106,6 +106,9 @@ pre {
 .collapsible:hover {
   background-color: #ccc;
 }
+.hidden{
+  display: none;
+}
 /* Style the collapsible content. Note: hidden by default */
 .content {
   padding: 5px;

@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       // create table
       originalTableData = result;
       const tbl = createTable(result);
-      hideStuff();
+      hideLateRounds();
       
       tableLocation.appendChild(tbl);
     }
@@ -206,6 +206,7 @@ function changeView(round){
 
 function resetTable() {
 	removeButtonShadow('resetButton');
+  round = 0;
   // clear the removal styling
   let queryChangeString = document.querySelectorAll('.redLineTable');
   if(queryChangeString){
@@ -223,13 +224,11 @@ function resetTable() {
   tableLocation.removeChild(tableLocation.firstElementChild);
   const newTable = createTable(originalTableData);
   tableLocation.appendChild(newTable);
-  if(round<4){
-    hideStuff(); // running this will rehide the pokemon from later rounds
-  }else{  
-    if (confirm("Would you like to keep hiding the mons from later rounds?")){
-      hideStuff();
-    }
+  if (confirm("Would you like to keep hiding the mons from later rounds?")){
+    hideLateRounds();
   }
+  document.getElementById('iteratorLabel').innerText = 'Round 0!! Click here when you start the game!';
+  
 }
 function createTable(result) {
   let internalResult = result;
@@ -318,7 +317,6 @@ function roundIterator(){
   // deal with the round iteration here by hiding rows up to 372 
   const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
   const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
-
   if(round===1){
     alert('starting the round iteration! Removing mons that can\'t exist before round 4.');
   }else if(round===4){
@@ -341,7 +339,7 @@ function roundIterator(){
     });
   }
 }
-function hideStuff(){
+function hideLateRounds(){
   const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
   postRound4Mons.forEach(postRound4Row => {
     postRound4Row.className += " hidden";
