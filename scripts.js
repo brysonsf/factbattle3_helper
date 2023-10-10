@@ -170,6 +170,40 @@ function clearPokemon() {
   
 }
 
+function changeView(round){
+  // set up default options 
+  // #viewIndicatorAll, #viewIndicator1, #viewInidicator4
+  let viewAll, view1, view4;
+  viewAll = document.getElementById('viewIndicatorAll');
+  view1 = document.getElementById('viewIndicator1');
+  view4 = document.getElementById('viewIndicator4');
+  console.log(round);
+  if(round==='all'){
+    console.log(round);
+  	removeButtonShadow('changeViewButtonAll');
+    viewAll.style.color = 'green';
+    view1.style.color = 'red';
+    view4.style.color = 'red';
+    // rebuild table
+  } else if(round==='1'){
+    console.log(round);
+  	removeButtonShadow('changeViewButton1');
+    viewAll.style.color = 'red';
+    view1.style.color = 'green';
+    view4.style.color = 'red';
+    // rebuild table
+  } else if(round==='4'){
+    console.log(round);
+  	removeButtonShadow('changeViewButton4');
+    viewAll.style.color = 'red';
+    view1.style.color = 'red';
+    view4.style.color = 'green';
+    // rebuild table
+  } else{
+    console.log('no valid option');
+  }
+}
+
 function resetTable() {
 	removeButtonShadow('resetButton');
   // clear the removal styling
@@ -211,9 +245,11 @@ function createTable(result) {
       var row = tbl.insertRow(counter);
       // ignore headers - deal w each pokemon here
       let pkmnData = result[counter] || "";
+      pokemonList.push(pkmnData);
       let pokeIndex = pkmnData[0] || "";
       let pkmnName = pkmnData[1] || "";
       let pkmnInstance = pkmnData[2] || "";
+      //nature[3], item[4], move 1-4[5][6][7][8], ability[9], ev[10], 100stats[11], 100speed[12], 50 stats[13], 50 speed[14], Brains Fixed IVs[15]
       let className = '';
       if(counter<=372){
         row.className = "roundsOneTwoThree ";
@@ -224,6 +260,9 @@ function createTable(result) {
       
       className += " " + pkmnName.toLowerCase() + pkmnInstance;
       for (let g = 0; g < NUM_COLUMNS; g++) {
+        if(g >= 5 && g <=8){
+          // categorizeMove() - function to assign category to applicable moves, will also need to tally categories for each mon so that they self-distinguish
+        }
         if (pkmnData[g] == null) {
           pkmnData[g] = "NO DATA";
         }
@@ -242,7 +281,6 @@ function createTable(result) {
         if (!nameList.includes(pkmnName)) {
           nameList.push(pkmnName);
         }
-        pokemonList.push(pkmnData[g]);
       }
       counter++;
     }
