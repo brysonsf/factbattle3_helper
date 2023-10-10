@@ -1,4 +1,9 @@
-
+tr:hover{
+  color: blue;
+}
+tr:active{
+  color: green;
+}
 .label{
   width: 300px;
 }
@@ -117,22 +122,64 @@ pre {
 .button {
   margin-bottom: 50px;
 }
-
+#viewIndicatorAll, #viewIndicator1, #viewIndicator4{
+  color: green;
+  display: inline;
+}
 /* Pokeball stuffs */
+.resetDiv{
+  border-right: 1px solid black;
+  width: 30%;
+}
+.changeView{
+  border-right: 1px solid black;
+  width: 80%;
+}
+#changeViewLabel{
+  margin-left: 5%;
+  width: 100%;
+}
+#changeViewButtonAll{
+  left: 5%;
+  border: 0;
+  size: inherit;
+}
+#changeViewButton1{
+  left: 30%;
+  border: 0;
+  size: inherit;
+}
+#changeViewButton4{
+  left: 50%;
+  border: 0;
+  size: inherit;
+}
+#changeViewButton1 > .poke_box{
+  left: 5%;
+  top: 0px;
+}
+#changeViewButton4 > .poke_box{
+  left: 50%;
+  top: 0px;
+}
+#changeViewButtonAll > .poke_box{
+  left: 30%;
+  top: 0px;
+}
 #resetButton, #findButton, #clearButton, #roundIteratorButton{
   border: 0;
   size: inherit;
 }
-.poke_box{
-    position: absolute;
+#resetLabel{
+  width: 100%;
 }
 #resetButton > .poke_box{
-  left: 100%;
-  top: 5px;
+  left: 50%;
+  top: 0px;
 }
 #roundIteratorButton > .poke_box{
   left: 100%;
-  top: 0px; 
+  top: 0px;
 }
 #clearButton > .poke_box{
   left: 100%;
@@ -142,8 +189,12 @@ pre {
   left: 100%;
   top: 5px;
 }
-.hidden{
-  display: none;
+#findButton > .poke_box{
+  left: 100%;
+  top: 5px;
+}
+.poke_box{
+  position: absolute;
 }
 .pokeball{
     position: relative;
