@@ -39,8 +39,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
       // create table
       originalTableData = result;
       const tbl = createTable(result);
-      hideStuff();
-      
+      hideInput();
+      hideLateRounds();
+
+      if(document.getElementById('viewIndicator4')){
+        document.getElementById('viewIndicator4').className='highlight-red';
+      }
+      if(document.getElementById('viewIndicator1')){
+        document.getElementById('viewIndicator1').className='highlight-red';
+
+      }
+      if(document.getElementById('viewIndicatorAll')){
+        document.getElementById('viewIndicatorAll').className='highlight-green';
+      }
       tableLocation.appendChild(tbl);
     }
     FR.readAsArrayBuffer(file);
@@ -58,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         content.style.display = "block";
         document.getElementById('tipButton').innerHTML = "Hide Tips on Scientiest Quotes";
       }
-    });  
+    });
   }
 
   const dataButton = document.getElementById('dataButton');
@@ -82,17 +93,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   const brainButton = document.getElementById('brainButton');
   const nolandPic = document.getElementById('noland_img');
+  const nolandWarning = nolandPic.nextElementSibling;
   if(brainButton){
     brainButton.addEventListener("click", function() {
       var tableContent = brainButton.nextElementSibling;
-      if (tableContent.style.display === "block") {
-        tableContent.style.display = "none";
-        nolandPic.style.display = "none";
-        brainButton.innerHTML = "Show Noland Details";
-      } else {
-        tableContent.style.display = "block";
-        nolandPic.style.display = "block";
-        brainButton.innerHTML = "Hide Noland Details";
+      if(tableContent && nolandPic && nolandWarning){
+        if (tableContent.style.display === "block") {
+          tableContent.style.display = "none";
+          nolandPic.style.display = "none";
+          nolandWarning.style.display = "none";
+          brainButton.innerHTML = "Show Noland Details";
+        } else {
+          tableContent.style.display = "block";
+          nolandPic.style.display = "block";
+          nolandWarning.style.display = "block";
+          brainButton.innerHTML = "Hide Noland Details";
+        }
       }
     });
   }
@@ -101,11 +117,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let searchInput = document.getElementById("pokemon_search");
   let clearInput = document.getElementById("pokemon_clear");
+  let checkInput = document.getElementById("pokemon_check");
   if(searchInput){
     autocomplete(document.getElementById("pokemon_search"), nameList);
   }
   if(clearInput){
     autocomplete(document.getElementById("pokemon_clear"), nameList);
+  }
+  if(checkInput){
+    autocomplete(document.getElementById("pokemon_check"), nameList);
   }
 });
 
@@ -118,8 +138,7 @@ function findPokemon() {
   	let pokeSearchString = searchBlock.value;
   	if(pokeSearchString==="" || !pokeSearchString){
   		return alert("empty input");  
-  	}	
-		alert("finding "+pokeSearchString+" from table");
+  	}
 	  pokeSearchString = pokeSearchString.toLowerCase();
     const pokeTableQueryString = '.' + pokeSearchString;
     
@@ -127,13 +146,11 @@ function findPokemon() {
     const tableBody = document.querySelector('.pokemonDisplay > tbody');
     if(allMonRows){
       allMonRows.forEach(pokemonSearchedRow => {
-          var row = pokemonSearchedRow;
-          //tableBody.firstElementChild.insertBefore(row, null);
-          tableBody.insertBefore( row, tableBody.firstElementChild ); 
+        var row = pokemonSearchedRow;
+        tableBody.insertBefore( row, tableBody.firstElementChild );         
       });
     }
   }
-	
 }
 
 function clearPokemon() {
@@ -170,42 +187,10 @@ function clearPokemon() {
   
 }
 
-function changeView(round){
-  // set up default options 
-  // #viewIndicatorAll, #viewIndicator1, #viewInidicator4
-  let viewAll, view1, view4;
-  viewAll = document.getElementById('viewIndicatorAll');
-  view1 = document.getElementById('viewIndicator1');
-  view4 = document.getElementById('viewIndicator4');
-  console.log(round);
-  if(round==='all'){
-    console.log(round);
-  	removeButtonShadow('changeViewButtonAll');
-    viewAll.style.color = 'green';
-    view1.style.color = 'red';
-    view4.style.color = 'red';
-    // rebuild table
-  } else if(round==='1'){
-    console.log(round);
-  	removeButtonShadow('changeViewButton1');
-    viewAll.style.color = 'red';
-    view1.style.color = 'green';
-    view4.style.color = 'red';
-    // rebuild table
-  } else if(round==='4'){
-    console.log(round);
-  	removeButtonShadow('changeViewButton4');
-    viewAll.style.color = 'red';
-    view1.style.color = 'red';
-    view4.style.color = 'green';
-    // rebuild table
-  } else{
-    console.log('no valid option');
-  }
-}
 
 function resetTable() {
 	removeButtonShadow('resetButton');
+  round = 0;
   // clear the removal styling
   let queryChangeString = document.querySelectorAll('.redLineTable');
   if(queryChangeString){
@@ -223,13 +208,24 @@ function resetTable() {
   tableLocation.removeChild(tableLocation.firstElementChild);
   const newTable = createTable(originalTableData);
   tableLocation.appendChild(newTable);
-  if(round<4){
-    hideStuff(); // running this will rehide the pokemon from later rounds
-  }else{  
-    if (confirm("Would you like to keep hiding the mons from later rounds?")){
-      hideStuff();
-    }
-  }
+  revealEarlyRounds();
+  revealLateRounds();
+  //document.getElementById('viewIndicatorAll').style.color='green';
+  document.getElementById('viewIndicatorAll').className='highlight-green';
+  //document.getElementById('viewIndicator1').style.color='red';
+  document.getElementById('viewIndicator1').className='highlight-red';
+ // document.getElementById('viewIndicator4').style.color='red';
+  document.getElementById('viewIndicator4').className='highlight-red';
+  // below is unecessary with new code and roundIterator()
+  if (confirm("Would you like to hide the mons from later rounds?")){
+    hideLateRounds();
+    //document.getElementById('viewIndicatorAll').style.color='red';
+    document.getElementById('viewIndicatorAll').className='highlight-red';
+    //document.getElementById('viewIndicator1').style.color='green';
+    document.getElementById('viewIndicator1').className='highlight-green';
+}
+  document.getElementById('iteratorLabel').innerText = 'Round 0!! Click here when you start the game!';
+  
 }
 function createTable(result) {
   let internalResult = result;
@@ -309,7 +305,76 @@ function createTable(result) {
   return tbl;
   }
 }
+function isElementInViewport ({el = false}) {
+  let returnString='';
+  removeButtonShadow('checkButton');
+  // false el === from interface; otherwise it has a value
+  if(!el){
+    let inputTextBlock = document.getElementById('pokemon_check');
+    if(inputTextBlock){
+      let pokeSearchString = inputTextBlock.value;
+      console.log(pokeSearchString);
+      if(pokeSearchString==="" || !pokeSearchString){
+        return alert("empty input");  
+      }
+      pokeSearchString = pokeSearchString.toLowerCase();
+      const pokeTableQueryString = '.' + pokeSearchString;
+      let allMonRows = document.querySelectorAll('tr' + pokeTableQueryString); // returns all rows
+      const tableBody = document.querySelector('.pokemonDisplay > tbody');
+      let outputTable = document.getElementById('output_table');
+      let pokeTable = outputTable.firstElementChild;
+      var tableRect = pokeTable.getBoundingClientRect();
+      var rect;
+      returnString += 'Pokemon not in view:';
+      let instance =1;
+      if(allMonRows){
+        allMonRows.forEach(pokemonSearchedRow => {
+          // only bring up rows if they arent in view
+          rect = pokemonSearchedRow.getBoundingClientRect();
 
+          // check if rect is within the 500 tall
+          // checks bottom
+          console.log(rect, 'pokemon row location');
+          if(tableRect.top>rect.bottom){
+            returnString +=' ' + pokeSearchString + ' ' + instance + ' ';
+          }else if(tableRect.bottom<rect.top){
+            returnString += ' ' + pokeSearchString + ' ' + instance + ' ';
+          }
+          instance++;
+          console.log(returnString);
+        });
+      }
+    }
+    
+    if(returnString!=='Pokemon not in view:'){
+      if(returnString!==''){
+        return alert(returnString);
+      }
+    }
+    return alert('all mons visible in table');
+  }else{
+    let outputTable = document.getElementById('output_table');
+    let pokeTable = outputTable.firstElementChild;
+    var tableRect = pokeTable.getBoundingClientRect();
+    var rect;
+    el.forEach(eachRow => {
+      rect = eachRow.getBoundingClientRect();
+    // check if rect is within the 500 tall
+    // checks bottom
+      if(tableRect.botto<rect.top){
+        if(tableRect.top>rect.top){
+          returnString += eachRow.value + ' ';  
+        }
+      }
+    });
+    if(returnString===''){
+      return alert('all mons visible in table');
+    }else{
+      return alert(returnString, 'final IsElementInViewport alert');
+    }
+
+  }
+}
 function roundIterator(){
   removeButtonShadow('roundIteratorButton');
   round+=1;
@@ -318,34 +383,114 @@ function roundIterator(){
   // deal with the round iteration here by hiding rows up to 372 
   const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
   const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
-
   if(round===1){
     alert('starting the round iteration! Removing mons that can\'t exist before round 4.');
   }else if(round===4){
     alert('Congrats on making round 4! Removing mons that can\'t exist after round 4, and returning the ones who can.');
   }
-  
+  let viewAll, view1, view4;
+  viewAll = document.getElementById('viewIndicatorAll');
+  view1 = document.getElementById('viewIndicator1');
+  view4 = document.getElementById('viewIndicator4');
   if(round<4){
-    postRound4Mons.forEach(postRound4Row => {
-      var row = postRound4Row;
-      postRound4Row.className += " hidden";
-    });
+    hideLateRounds();
+    revealEarlyRounds();
+    //view4.style.color="red";
+    view4.className='highlight-red';
+    //view1.style.color="green";
+    view1.className='highlight-green';
+    //viewAll.style.color="red";
+    viewAll.className='highlight-red';
   } else if(round>=4){
-    preRound4Mons.forEach(preRound4Row => {
-      var row = preRound4Row;
-      preRound4Row.className += " hidden";
-    });
-    postRound4Mons.forEach(postRound4Row => {
-      var row = postRound4Row;
-      row.className = row.className.slice(0, row.length-7);
-    });
+    hideEarlyRounds();
+    revealLateRounds();
+    //view4.style.color="green";
+    view4.className='highlight-green';
+    //view1.style.color="red";
+    view1.className='highlight-red';
+    //viewAll.style.color="red";
+    viewAll.className='highlight-red';
   }
 }
-function hideStuff(){
+function hideLateRounds(){
   const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
   postRound4Mons.forEach(postRound4Row => {
-    postRound4Row.className += " hidden";
+    var rowClassName = postRound4Row.className;
+    while(rowClassName.indexOf('hidden')===-1){
+      postRound4Row.className += " hidden";
+      rowClassName = postRound4Row.className;
+    }
   });
+}
+function hideEarlyRounds(){
+  const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
+  preRound4Mons.forEach(preRound4Row => {
+    var rowClassName = preRound4Row.className;
+    while(rowClassName.indexOf('hidden')===-1){
+      preRound4Row.className += " hidden"; // only add if it doesnt exist yet
+      rowClassName = preRound4Row.className;
+    }
+  });
+}
+function revealEarlyRounds(){
+  const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
+  preRound4Mons.forEach(preRound4Row => {
+    var rowClassName = preRound4Row.className;
+    while(rowClassName.indexOf('hidden')!==-1){
+    preRound4Row.className = rowClassName.substring( 0, rowClassName.indexOf( "hidden" )-1 ); // -1 for the period
+    rowClassName = preRound4Row.className;
+    }
+  });
+}
+function revealLateRounds(){
+  const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
+  postRound4Mons.forEach(postRound4Row => {
+    var rowClassName = postRound4Row.className;
+    while(rowClassName.indexOf('hidden')!==-1){
+      postRound4Row.className = rowClassName.substring( 0, rowClassName.indexOf( "hidden" )-1 ); // -1 for the period
+      rowClassName = postRound4Row.className;
+    }
+  });
+}
+function changeView(round){
+  let viewAll, view1, view4;
+  viewAll = document.getElementById('viewIndicatorAll');
+  view1 = document.getElementById('viewIndicator1');
+  view4 = document.getElementById('viewIndicator4');
+  console.log(round);
+  if(round==='all'){
+    console.log(round);
+  	removeButtonShadow('changeViewButtonAll');
+    view4.className='highlight-red';
+    view1.className='highlight-red';
+    viewAll.className='highlight-green';
+    revealEarlyRounds();
+    revealLateRounds();
+    // rebuild table
+  } else if(round==='1'){
+    console.log(round);
+  	removeButtonShadow('changeViewButton1');
+    view4.className='highlight-red';
+    view1.className='highlight-green';
+    viewAll.className='highlight-red';
+    hideLateRounds();
+    revealEarlyRounds();
+    // rebuild table
+  } else if(round==='4'){
+    console.log(round);
+  	removeButtonShadow('changeViewButton4');
+    view4.className='highlight-green';
+    view1.className='highlight-red';
+    viewAll.className='highlight-red';
+    hideEarlyRounds();
+    revealLateRounds();
+    // rebuild table
+  } else{
+    console.log('no valid option');
+  }
+}
+
+function hideInput(){
   const inputToHide = document.getElementById('input-hider');
   if(inputToHide){
     inputToHide.parentNode.removeChild(inputToHide);
@@ -359,6 +504,19 @@ function buildBrain(brainData, headers){
   */
   // re-display both the button and div once data loads
   let brainButton= document.getElementById('brainButton');
+  let nolandPic = document.getElementById('noland_img');
+  let noland_brain = document.getElementById('noland_brain');
+  let nolandWarning = nolandPic.nextElementSibling;
+  if(nolandPic){
+    nolandPic.style.display = "none";
+  }
+  if(nolandWarning){
+    nolandWarning.style.display = "none";
+  }
+  if(brainButton){
+    brainButton.style.color = 'black';
+    brainButton.innerText = "Show Noland Details";
+  }
   let nolandDiv= document.getElementById('nolan_brain');
   if(brainButton){
     brainButton.style.display='block';
@@ -422,11 +580,9 @@ function buildBrain(brainData, headers){
       headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + brainHeaders[i] + "</th>";
     }
   }
-  let nolandImage = document.getElementById('noland_image');
-  let noland_brain = document.getElementById('noland_brain');
   const newNode = document.createElement("div");
   newNode.className = 'content';
-  newNode.appendChild(tbl, nolandImage);
+  newNode.appendChild(tbl, nolandPic);
   noland_brain.insertBefore(newNode, noland_brain.children[1]);
 }
 
@@ -440,6 +596,7 @@ function removeButtonShadow(buttonString){
 	const button = document.getElementById(buttonString);
   if(button){
   	button.style.boxShadow="none";
+  	button.style.outline="none";
   }
 }
 // currently only scrolls to the end of the table 

@@ -39,7 +39,7 @@ tr:active{
   width: 100%;
   color: darkred;
 }
-#pokemon_searchautocomplete-list, #pokemon_clearautocomplete-list {
+#pokemon_searchautocomplete-list, #pokemon_clearautocomplete-list, #pokemon_checkautocomplete-list {
   width: 100%;
 }
 #scientist-quotes-tips,
@@ -106,6 +106,9 @@ pre {
 .collapsible:hover {
   background-color: #ccc;
 }
+.hidden{
+  display: none;
+}
 /* Style the collapsible content. Note: hidden by default */
 .content {
   padding: 5px;
@@ -122,10 +125,80 @@ pre {
 .button {
   margin-bottom: 50px;
 }
+
+/* fancy View indication styling */
 #viewIndicatorAll, #viewIndicator1, #viewIndicator4{
-  color: green;
+  color: black;
   display: inline;
 }
+.highlight-red {
+  border-radius: 1em 0 1em 0;
+  background-image: linear-gradient(
+    -100deg,
+    rgba(255, 20, 0, 0.2),
+    rgba(255, 20, 0, 0.7) 95%,
+    rgba(255, 20, 0, 0.1)
+  );
+}
+.highlight-green {
+  border-radius: 1em 0 1em 0;
+  background-image: linear-gradient(
+    -100deg,
+    rgba(0, 255, 20, 0.2),
+    rgba(0, 255, 20, 0.7) 95%,
+    rgba(0, 255, 20, 0.1)
+  );
+}
+.highlight-yellow {
+  border-radius: 1em 0 1em 0;
+  background-image: linear-gradient(
+    -100deg,
+    rgba(255, 224, 0, 0.2),
+    rgba(255, 224, 0, 0.7) 95%,
+    rgba(255, 224, 0, 0.1)
+  );
+}
+/*
+.circle-sketch-highlight{
+  position:relative;
+  left:0.5em;
+}
+.circle-sketch-highlight:before{
+  content:"";
+  z-index:-1;
+  left:-0.5em;
+  top:-0.5em;
+  border-width:2px;
+  border-style:solid;
+  border-color:#ef8c22;
+  position:absolute;
+  border-right-color:transparent;
+  width:150%;
+  height:2em;
+  transform:rotate(2deg);
+  opacity:0.7;
+  border-radius:50%;
+  padding:0.1em 0.25em;
+}
+.circle-sketch-highlight:after{
+  content:"";
+  z-index:-1;
+  left:-0.55em;
+  top:-0.55em;
+  padding:0.1em 0.25em;
+  border-width:2px;
+  border-style:solid;
+  border-color:#ef8c22;
+  border-left-color:transparent;
+  border-top-color:transparent;
+  position:absolute;
+  width:150%;
+  height:2em;
+  transform:rotate(-1deg);
+  opacity:0.7;
+  border-radius:50%;
+}
+*/
 /* Pokeball stuffs */
 .resetDiv{
   border-right: 1px solid black;
@@ -166,12 +239,16 @@ pre {
   left: 30%;
   top: 0px;
 }
-#resetButton, #findButton, #clearButton, #roundIteratorButton{
+#resetButton, #findButton, #clearButton, #roundIteratorButton, #checkButton{
   border: 0;
   size: inherit;
 }
 #resetLabel{
   width: 100%;
+}
+#checkButton > .poke_box{
+  left:0;
+  top: 0;
 }
 #resetButton > .poke_box{
   left: 50%;
