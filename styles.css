@@ -31,7 +31,7 @@ tr:active{
   box-shadow: none;
   outline: none;
 }
-.data, #dataButton, .tips, #tipButton, #nolandFloat{
+.data, #dataButton, .tips, #tipButton{
   text-align: center;
   width: 100%;
 }

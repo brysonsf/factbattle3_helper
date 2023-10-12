@@ -83,17 +83,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   const brainButton = document.getElementById('brainButton');
   const nolandPic = document.getElementById('noland_img');
+  const nolandWarning = nolandPic.nextElementSibling;
   if(brainButton){
     brainButton.addEventListener("click", function() {
       var tableContent = brainButton.nextElementSibling;
-      if (tableContent.style.display === "block") {
-        tableContent.style.display = "none";
-        nolandPic.style.display = "none";
-        brainButton.innerHTML = "Show Noland Details";
-      } else {
-        tableContent.style.display = "block";
-        nolandPic.style.display = "block";
-        brainButton.innerHTML = "Hide Noland Details";
+      if(tableContent && nolandPic && nolandWarning){
+        if (tableContent.style.display === "block") {
+          tableContent.style.display = "none";
+          nolandPic.style.display = "none";
+          nolandWarning.style.display = "none";
+          brainButton.innerHTML = "Show Noland Details";
+        } else {
+          tableContent.style.display = "block";
+          nolandPic.style.display = "block";
+          nolandWarning.style.display = "block";
+          brainButton.innerHTML = "Hide Noland Details";
+        }
       }
     });
   }
@@ -192,8 +197,16 @@ function resetTable() {
   tableLocation.removeChild(tableLocation.firstElementChild);
   const newTable = createTable(originalTableData);
   tableLocation.appendChild(newTable);
-  if (confirm("Would you like to keep hiding the mons from later rounds?")){
+  revealEarlyRounds();
+  revealLateRounds();
+  document.getElementById('viewIndicatorAll').style.color='green';
+  document.getElementById('viewIndicator1').style.color='red';
+  document.getElementById('viewIndicator4').style.color='red';
+  // below is unecessary with new code and roundIterator()
+  if (confirm("Would you like to hide the mons from later rounds?")){
     hideLateRounds();
+    document.getElementById('viewIndicatorAll').style.color='red';
+    document.getElementById('viewIndicator1').style.color='green';
   }
   document.getElementById('iteratorLabel').innerText = 'Round 0!! Click here when you start the game!';
   
@@ -401,6 +414,9 @@ function buildBrain(brainData, headers){
   */
   // re-display both the button and div once data loads
   let brainButton= document.getElementById('brainButton');
+  if(brainButton){
+    brainButton.style.color = 'black';
+  }
   let nolandDiv= document.getElementById('nolan_brain');
   if(brainButton){
     brainButton.style.display='block';
