@@ -146,13 +146,8 @@ function findPokemon() {
     const tableBody = document.querySelector('.pokemonDisplay > tbody');
     if(allMonRows){
       allMonRows.forEach(pokemonSearchedRow => {
-        // only move rows if they arent in view
-        // moves only first instance
-        if(!isElementInViewport({el: pokemonSearchedRow})){
-          var row = pokemonSearchedRow;
-          tableBody.insertBefore( row, tableBody.firstElementChild ); 
-        }
-        
+        var row = pokemonSearchedRow;
+        tableBody.insertBefore( row, tableBody.firstElementChild );         
       });
     }
   }
@@ -312,7 +307,7 @@ function createTable(result) {
 }
 function isElementInViewport ({el = false}) {
   let returnString='';
-  removeButtonShadow(document.getElementById('checkButton'));
+  removeButtonShadow('checkButton');
   // false el === from interface; otherwise it has a value
   if(!el){
     let inputTextBlock = document.getElementById('pokemon_check');
@@ -375,13 +370,10 @@ function isElementInViewport ({el = false}) {
     if(returnString===''){
       return alert('all mons visible in table');
     }else{
-      alert(returnString, 'final IsElementInViewport alert');
-      return false; // false for usage in loop of Find
+      return alert(returnString, 'final IsElementInViewport alert');
     }
 
   }
-  
-  return returnString;
 }
 function roundIterator(){
   removeButtonShadow('roundIteratorButton');
@@ -402,6 +394,7 @@ function roundIterator(){
   view4 = document.getElementById('viewIndicator4');
   if(round<4){
     hideLateRounds();
+    revealEarlyRounds();
     //view4.style.color="red";
     view4.className='highlight-red';
     //view1.style.color="green";
@@ -603,6 +596,7 @@ function removeButtonShadow(buttonString){
 	const button = document.getElementById(buttonString);
   if(button){
   	button.style.boxShadow="none";
+  	button.style.outline="none";
   }
 }
 // currently only scrolls to the end of the table 
