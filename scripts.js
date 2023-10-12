@@ -41,7 +41,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
       const tbl = createTable(result);
       hideInput();
       hideLateRounds();
-      
+
+      if(document.getElementById('viewIndicator4')){
+        document.getElementById('viewIndicator4').className='highlight-red';
+      }
+      if(document.getElementById('viewIndicator1')){
+        document.getElementById('viewIndicator1').className='highlight-red';
+
+      }
+      if(document.getElementById('viewIndicatorAll')){
+        document.getElementById('viewIndicatorAll').className='highlight-green';
+      }
       tableLocation.appendChild(tbl);
     }
     FR.readAsArrayBuffer(file);
@@ -199,15 +209,20 @@ function resetTable() {
   tableLocation.appendChild(newTable);
   revealEarlyRounds();
   revealLateRounds();
-  document.getElementById('viewIndicatorAll').style.color='green';
-  document.getElementById('viewIndicator1').style.color='red';
-  document.getElementById('viewIndicator4').style.color='red';
+  //document.getElementById('viewIndicatorAll').style.color='green';
+  document.getElementById('viewIndicatorAll').className='highlight-green';
+  //document.getElementById('viewIndicator1').style.color='red';
+  document.getElementById('viewIndicator1').className='highlight-red';
+ // document.getElementById('viewIndicator4').style.color='red';
+  document.getElementById('viewIndicator4').className='highlight-red';
   // below is unecessary with new code and roundIterator()
   if (confirm("Would you like to hide the mons from later rounds?")){
     hideLateRounds();
-    document.getElementById('viewIndicatorAll').style.color='red';
-    document.getElementById('viewIndicator1').style.color='green';
-  }
+    //document.getElementById('viewIndicatorAll').style.color='red';
+    document.getElementById('viewIndicatorAll').className='highlight-red';
+    //document.getElementById('viewIndicator1').style.color='green';
+    document.getElementById('viewIndicator1').className='highlight-green';
+}
   document.getElementById('iteratorLabel').innerText = 'Round 0!! Click here when you start the game!';
   
 }
@@ -309,15 +324,21 @@ function roundIterator(){
   view4 = document.getElementById('viewIndicator4');
   if(round<4){
     hideLateRounds();
-    view4.style.color="red";
-    view1.style.color="green";
-    viewAll.style.color="red";
+    //view4.style.color="red";
+    view4.className='highlight-red';
+    //view1.style.color="green";
+    view1.className='highlight-green';
+    //viewAll.style.color="red";
+    viewAll.className='highlight-red';
   } else if(round>=4){
     hideEarlyRounds();
     revealLateRounds();
-    view4.style.color="green";
-    view1.style.color="red";
-    viewAll.style.color="red";
+    //view4.style.color="green";
+    view4.className='highlight-green';
+    //view1.style.color="red";
+    view1.className='highlight-red';
+    //viewAll.style.color="red";
+    viewAll.className='highlight-red';
   }
 }
 
@@ -371,27 +392,27 @@ function changeView(round){
   if(round==='all'){
     console.log(round);
   	removeButtonShadow('changeViewButtonAll');
-    viewAll.style.color = 'green';
-    view1.style.color = 'red';
-    view4.style.color = 'red';
+    view4.className='highlight-red';
+    view1.className='highlight-red';
+    viewAll.className='highlight-green';
     revealEarlyRounds();
     revealLateRounds();
     // rebuild table
   } else if(round==='1'){
     console.log(round);
   	removeButtonShadow('changeViewButton1');
-    viewAll.style.color = 'red';
-    view1.style.color = 'green';
-    view4.style.color = 'red';
+    view4.className='highlight-red';
+    view1.className='highlight-green';
+    viewAll.className='highlight-red';
     hideLateRounds();
     revealEarlyRounds();
     // rebuild table
   } else if(round==='4'){
     console.log(round);
   	removeButtonShadow('changeViewButton4');
-    viewAll.style.color = 'red';
-    view1.style.color = 'red';
-    view4.style.color = 'green';
+    view4.className='highlight-green';
+    view1.className='highlight-red';
+    viewAll.className='highlight-red';
     hideEarlyRounds();
     revealLateRounds();
     // rebuild table
