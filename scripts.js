@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       // create table
       originalTableData = result;
       const tbl = createTable(result);
+      hideInput();
       hideLateRounds();
       
       tableLocation.appendChild(tbl);
@@ -170,39 +171,6 @@ function clearPokemon() {
   
 }
 
-function changeView(round){
-  // set up default options 
-  // #viewIndicatorAll, #viewIndicator1, #viewInidicator4
-  let viewAll, view1, view4;
-  viewAll = document.getElementById('viewIndicatorAll');
-  view1 = document.getElementById('viewIndicator1');
-  view4 = document.getElementById('viewIndicator4');
-  console.log(round);
-  if(round==='all'){
-    console.log(round);
-  	removeButtonShadow('changeViewButtonAll');
-    viewAll.style.color = 'green';
-    view1.style.color = 'red';
-    view4.style.color = 'red';
-    // rebuild table
-  } else if(round==='1'){
-    console.log(round);
-  	removeButtonShadow('changeViewButton1');
-    viewAll.style.color = 'red';
-    view1.style.color = 'green';
-    view4.style.color = 'red';
-    // rebuild table
-  } else if(round==='4'){
-    console.log(round);
-  	removeButtonShadow('changeViewButton4');
-    viewAll.style.color = 'red';
-    view1.style.color = 'red';
-    view4.style.color = 'green';
-    // rebuild table
-  } else{
-    console.log('no valid option');
-  }
-}
 
 function resetTable() {
 	removeButtonShadow('resetButton');
@@ -322,28 +290,115 @@ function roundIterator(){
   }else if(round===4){
     alert('Congrats on making round 4! Removing mons that can\'t exist after round 4, and returning the ones who can.');
   }
-  
+  let viewAll, view1, view4;
+  viewAll = document.getElementById('viewIndicatorAll');
+  view1 = document.getElementById('viewIndicator1');
+  view4 = document.getElementById('viewIndicator4');
   if(round<4){
-    postRound4Mons.forEach(postRound4Row => {
-      var row = postRound4Row;
-      postRound4Row.className += " hidden";
-    });
+    hideLateRounds();
+    view4.style.color="red";
+    view1.style.color="green";
+    viewAll.style.color="red";
   } else if(round>=4){
-    preRound4Mons.forEach(preRound4Row => {
-      var row = preRound4Row;
-      preRound4Row.className += " hidden";
-    });
-    postRound4Mons.forEach(postRound4Row => {
-      var row = postRound4Row;
-      row.className = row.className.slice(0, row.length-7);
-    });
+    hideEarlyRounds();
+    revealLateRounds();
+    view4.style.color="green";
+    view1.style.color="red";
+    viewAll.style.color="red";
   }
 }
+
+
 function hideLateRounds(){
   const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
   postRound4Mons.forEach(postRound4Row => {
-    postRound4Row.className += " hidden";
+    var rowClassName = postRound4Row.className;
+    while(rowClassName.indexOf('hidden')===-1){
+      postRound4Row.className += " hidden";
+      rowClassName = postRound4Row.className;
+    }
   });
+}
+function hideEarlyRounds(){
+  const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
+  preRound4Mons.forEach(preRound4Row => {
+    var rowClassName = preRound4Row.className;
+    while(rowClassName.indexOf('hidden')===-1){
+      preRound4Row.className += " hidden"; // only add if it doesnt exist yet
+      rowClassName = preRound4Row.className;
+    }
+  });
+}
+function revealEarlyRounds(){
+  const preRound4Mons = document.querySelectorAll('.roundsOneTwoThree');
+  preRound4Mons.forEach(preRound4Row => {
+    var rowClassName = preRound4Row.className;
+    while(rowClassName.indexOf('hidden')!==-1){
+    preRound4Row.className = rowClassName.substring( 0, rowClassName.indexOf( "hidden" )-1 ); // -1 for the period
+    rowClassName = preRound4Row.className;
+    //row.className = row.className.slice(0, row.length-7);
+    }
+  });
+}
+function revealLateRounds(){
+  const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
+  postRound4Mons.forEach(postRound4Row => {
+    var rowClassName = postRound4Row.className;
+    while(rowClassName.indexOf('hidden')!==-1){
+      postRound4Row.className = rowClassName.substring( 0, rowClassName.indexOf( "hidden" )-1 ); // -1 for the period
+      rowClassName = postRound4Row.className;
+    }
+  });
+  /*
+  postRound4Mons.forEach(postRound4Row => {
+    let revealClass =  postRound4Row.className;
+    revealClass = revealClass.substring( 0, revealClass.indexOf( "redLineTable" )-1 ); // -1 for the period
+    changeList = changeList.filter(a => a !== revealClass);
+    postRound4Mons.className = revealClass; // remove redLineTable class modifier
+    });
+    */
+}
+function changeView(round){
+  // set up default options 
+  // #viewIndicatorAll, #viewIndicator1, #viewInidicator4
+  let viewAll, view1, view4;
+  viewAll = document.getElementById('viewIndicatorAll');
+  view1 = document.getElementById('viewIndicator1');
+  view4 = document.getElementById('viewIndicator4');
+  console.log(round);
+  if(round==='all'){
+    console.log(round);
+  	removeButtonShadow('changeViewButtonAll');
+    viewAll.style.color = 'green';
+    view1.style.color = 'red';
+    view4.style.color = 'red';
+    revealEarlyRounds();
+    revealLateRounds();
+    // rebuild table
+  } else if(round==='1'){
+    console.log(round);
+  	removeButtonShadow('changeViewButton1');
+    viewAll.style.color = 'red';
+    view1.style.color = 'green';
+    view4.style.color = 'red';
+    hideLateRounds();
+    revealEarlyRounds();
+    // rebuild table
+  } else if(round==='4'){
+    console.log(round);
+  	removeButtonShadow('changeViewButton4');
+    viewAll.style.color = 'red';
+    view1.style.color = 'red';
+    view4.style.color = 'green';
+    hideEarlyRounds();
+    revealLateRounds();
+    // rebuild table
+  } else{
+    console.log('no valid option');
+  }
+}
+
+function hideInput(){
   const inputToHide = document.getElementById('input-hider');
   if(inputToHide){
     inputToHide.parentNode.removeChild(inputToHide);
