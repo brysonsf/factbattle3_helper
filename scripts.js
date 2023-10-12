@@ -134,8 +134,7 @@ function findPokemon() {
   	let pokeSearchString = searchBlock.value;
   	if(pokeSearchString==="" || !pokeSearchString){
   		return alert("empty input");  
-  	}	
-		alert("finding "+pokeSearchString+" from table");
+  	}
 	  pokeSearchString = pokeSearchString.toLowerCase();
     const pokeTableQueryString = '.' + pokeSearchString;
     
@@ -143,9 +142,10 @@ function findPokemon() {
     const tableBody = document.querySelector('.pokemonDisplay > tbody');
     if(allMonRows){
       allMonRows.forEach(pokemonSearchedRow => {
-          var row = pokemonSearchedRow;
-          //tableBody.firstElementChild.insertBefore(row, null);
-          tableBody.insertBefore( row, tableBody.firstElementChild ); 
+        console.log(isElementInViewport(pokemonSearchedRow));
+        var row = pokemonSearchedRow;
+        //tableBody.firstElementChild.insertBefore(row, null);
+        tableBody.insertBefore( row, tableBody.firstElementChild ); 
       });
     }
   }
@@ -304,7 +304,26 @@ function createTable(result) {
   return tbl;
   }
 }
-
+function isElementInViewport (el) {
+  // Special bonus for those using jQuery
+  if (typeof jQuery === "function" && el instanceof jQuery) {
+      el = el[0];
+  }
+  let outputTable = document.getElementById('output_table');
+  let pokeTable = outputTable.firstElementChild;
+  var tableRect = pokeTable.getBoundingClientRect();
+  var rect = el.getBoundingClientRect();
+  console.log(tableRect);
+  console.log(rect);
+  // check if rect is within the 500 tall
+  // checks bottom
+  if(tableRect.bottom>rect.top){
+    if(tableRect.top<rect.top){
+      return true;  
+    }
+  }
+  return false;
+}
 function roundIterator(){
   removeButtonShadow('roundIteratorButton');
   round+=1;
@@ -341,8 +360,6 @@ function roundIterator(){
     viewAll.className='highlight-red';
   }
 }
-
-
 function hideLateRounds(){
   const postRound4Mons = document.querySelectorAll('.rounds4AndOn');
   postRound4Mons.forEach(postRound4Row => {
