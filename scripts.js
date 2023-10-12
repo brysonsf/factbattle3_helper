@@ -340,19 +340,23 @@ function isElementInViewport ({el = false}) {
           // check if rect is within the 500 tall
           // checks bottom
           console.log(rect, 'pokemon row location');
-          if(tableRect.top<rect.bottom){
-            returnString += pokemonSearchedRow.value + ' ' + instance;
+          if(tableRect.top>rect.bottom){
+            returnString +=' ' + pokeSearchString + ' ' + instance + ' ';
           }else if(tableRect.bottom<rect.top){
-            returnString += pokemonSearchedRow.value + ' ' + instance;
+            returnString += ' ' + pokeSearchString + ' ' + instance + ' ';
           }
           instance++;
           console.log(returnString);
         });
       }
     }
+    
     if(returnString!=='Pokemon not in view:'){
-      return alert('all mons visible in table');
+      if(returnString!==''){
+        return alert(returnString);
+      }
     }
+    return alert('all mons visible in table');
   }else{
     let outputTable = document.getElementById('output_table');
     let pokeTable = outputTable.firstElementChild;
