@@ -336,7 +336,6 @@ function revealEarlyRounds(){
     while(rowClassName.indexOf('hidden')!==-1){
     preRound4Row.className = rowClassName.substring( 0, rowClassName.indexOf( "hidden" )-1 ); // -1 for the period
     rowClassName = preRound4Row.className;
-    //row.className = row.className.slice(0, row.length-7);
     }
   });
 }
@@ -349,18 +348,8 @@ function revealLateRounds(){
       rowClassName = postRound4Row.className;
     }
   });
-  /*
-  postRound4Mons.forEach(postRound4Row => {
-    let revealClass =  postRound4Row.className;
-    revealClass = revealClass.substring( 0, revealClass.indexOf( "redLineTable" )-1 ); // -1 for the period
-    changeList = changeList.filter(a => a !== revealClass);
-    postRound4Mons.className = revealClass; // remove redLineTable class modifier
-    });
-    */
 }
 function changeView(round){
-  // set up default options 
-  // #viewIndicatorAll, #viewIndicator1, #viewInidicator4
   let viewAll, view1, view4;
   viewAll = document.getElementById('viewIndicatorAll');
   view1 = document.getElementById('viewIndicator1');

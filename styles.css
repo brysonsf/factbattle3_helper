@@ -131,6 +131,7 @@ pre {
   color: green;
   display: inline;
 }
+/*
 .circle-sketch-highlight{
   position:relative;
   left:0.5em;
@@ -170,6 +171,7 @@ pre {
   opacity:0.7;
   border-radius:50%;
 }
+*/
 /* Pokeball stuffs */
 .resetDiv{
   border-right: 1px solid black;
