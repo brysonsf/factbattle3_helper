@@ -414,8 +414,18 @@ function buildBrain(brainData, headers){
   */
   // re-display both the button and div once data loads
   let brainButton= document.getElementById('brainButton');
+  let nolandPic = document.getElementById('noland_img');
+  let noland_brain = document.getElementById('noland_brain');
+  let nolandWarning = nolandPic.nextElementSibling;
+  if(nolandPic){
+    nolandPic.style.display = "none";
+  }
+  if(nolandWarning){
+    nolandWarning.style.display = "none";
+  }
   if(brainButton){
     brainButton.style.color = 'black';
+    brainButton.innerText = "Show Noland Details";
   }
   let nolandDiv= document.getElementById('nolan_brain');
   if(brainButton){
@@ -480,11 +490,9 @@ function buildBrain(brainData, headers){
       headerRow.insertCell(i).outerHTML = "<th style='height: 50px;'>" + brainHeaders[i] + "</th>";
     }
   }
-  let nolandImage = document.getElementById('noland_image');
-  let noland_brain = document.getElementById('noland_brain');
   const newNode = document.createElement("div");
   newNode.className = 'content';
-  newNode.appendChild(tbl, nolandImage);
+  newNode.appendChild(tbl, nolandPic);
   noland_brain.insertBefore(newNode, noland_brain.children[1]);
 }
 
