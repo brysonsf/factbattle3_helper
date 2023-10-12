@@ -230,20 +230,38 @@
   </section>
   <div class="form_controls_1">
     <div class="panel-block">
-      <form autocomplete="off">
-        <div class="autocomplete" style="width:300px;">
-          <input class="input is-rounded" type="search" id="pokemon_search" name="pokemon_search" placeholder="Find a pokemon..." />
-        </div>
-      </form>
-      <button id="findButton" onclick="findPokemon()" class="button is-large"> 
-        <div class="poke_box">
-          <div class="pokeball" title="Find Ball">
-            <div class="pokeball__button" title="Find Ball">
-              <p class="findBall" title="Find Ball"></p>
+      <div>
+        <form autocomplete="off">
+          <div class="autocomplete" style="width:300px;">
+            <input class="input is-rounded" type="search" id="pokemon_search" name="pokemon_search" placeholder="Find a pokemon..." />
+          </div>
+        </form>
+        <button id="findButton" onclick="findPokemon()" class="button is-large"> 
+          <div class="poke_box">
+            <div class="pokeball" title="Find Ball">
+              <div class="pokeball__button" title="Find Ball">
+                <p class="findBall" title="Find Ball"></p>
+              </div>
             </div>
           </div>
-        </div>
-      </button>  
+        </button>  
+      </div>
+      <div class="floating">
+        <form autocomplete="off">
+          <div class="autocomplete" style="width:300px;">
+            <input class="input is-rounded" type="search" id="pokemon_check" name="pokemon_check" placeholder="Check if a pokemon is visible..." />
+          </div>
+        </form>
+        <button id="checkButton" onclick="isElementInViewport({})" class="button is-large"> 
+          <div class="poke_box">
+            <div class="pokeball" title="Check Ball">
+              <div class="pokeball__button" title="Check Ball">
+                <p class="checkBall" title="Check Ball"></p>
+              </div>
+            </div>
+          </div>
+        </button>  
+      </div>
     </div>
 
       <div class="panel-block">

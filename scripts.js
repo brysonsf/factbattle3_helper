@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         content.style.display = "block";
         document.getElementById('tipButton').innerHTML = "Hide Tips on Scientiest Quotes";
       }
-    });  
+    });
   }
 
   const dataButton = document.getElementById('dataButton');
@@ -117,11 +117,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let searchInput = document.getElementById("pokemon_search");
   let clearInput = document.getElementById("pokemon_clear");
+  let checkInput = document.getElementById("pokemon_check");
   if(searchInput){
     autocomplete(document.getElementById("pokemon_search"), nameList);
   }
   if(clearInput){
     autocomplete(document.getElementById("pokemon_clear"), nameList);
+  }
+  if(checkInput){
+    autocomplete(document.getElementById("pokemon_check"), nameList);
   }
 });
 
@@ -142,14 +146,16 @@ function findPokemon() {
     const tableBody = document.querySelector('.pokemonDisplay > tbody');
     if(allMonRows){
       allMonRows.forEach(pokemonSearchedRow => {
-        console.log(isElementInViewport(pokemonSearchedRow));
-        var row = pokemonSearchedRow;
-        //tableBody.firstElementChild.insertBefore(row, null);
-        tableBody.insertBefore( row, tableBody.firstElementChild ); 
+        // only move rows if they arent in view
+        // moves only first instance
+        if(!isElementInViewport({el: pokemonSearchedRow})){
+          var row = pokemonSearchedRow;
+          tableBody.insertBefore( row, tableBody.firstElementChild ); 
+        }
+        
       });
     }
   }
-	
 }
 
 function clearPokemon() {
@@ -304,25 +310,74 @@ function createTable(result) {
   return tbl;
   }
 }
-function isElementInViewport (el) {
-  // Special bonus for those using jQuery
-  if (typeof jQuery === "function" && el instanceof jQuery) {
-      el = el[0];
-  }
-  let outputTable = document.getElementById('output_table');
-  let pokeTable = outputTable.firstElementChild;
-  var tableRect = pokeTable.getBoundingClientRect();
-  var rect = el.getBoundingClientRect();
-  console.log(tableRect);
-  console.log(rect);
-  // check if rect is within the 500 tall
-  // checks bottom
-  if(tableRect.bottom>rect.top){
-    if(tableRect.top<rect.top){
-      return true;  
+function isElementInViewport ({el = false}) {
+  let returnString='';
+  removeButtonShadow(document.getElementById('checkButton'));
+  // false el === from interface; otherwise it has a value
+  if(!el){
+    let inputTextBlock = document.getElementById('pokemon_check');
+    if(inputTextBlock){
+      let pokeSearchString = inputTextBlock.value;
+      console.log(pokeSearchString);
+      if(pokeSearchString==="" || !pokeSearchString){
+        return alert("empty input");  
+      }
+      pokeSearchString = pokeSearchString.toLowerCase();
+      const pokeTableQueryString = '.' + pokeSearchString;
+      let allMonRows = document.querySelectorAll('tr' + pokeTableQueryString); // returns all rows
+      const tableBody = document.querySelector('.pokemonDisplay > tbody');
+      let outputTable = document.getElementById('output_table');
+      let pokeTable = outputTable.firstElementChild;
+      var tableRect = pokeTable.getBoundingClientRect();
+      var rect;
+      returnString += 'Pokemon not in view:';
+      let instance =1;
+      if(allMonRows){
+        allMonRows.forEach(pokemonSearchedRow => {
+          // only bring up rows if they arent in view
+          rect = pokemonSearchedRow.getBoundingClientRect();
+
+          // check if rect is within the 500 tall
+          // checks bottom
+          console.log(rect, 'pokemon row location');
+          if(tableRect.top<rect.bottom){
+            returnString += pokemonSearchedRow.value + ' ' + instance;
+          }else if(tableRect.bottom<rect.top){
+            returnString += pokemonSearchedRow.value + ' ' + instance;
+          }
+          instance++;
+          console.log(returnString);
+        });
+      }
     }
+    if(returnString!=='Pokemon not in view:'){
+      return alert('all mons visible in table');
+    }
+  }else{
+    let outputTable = document.getElementById('output_table');
+    let pokeTable = outputTable.firstElementChild;
+    var tableRect = pokeTable.getBoundingClientRect();
+    var rect;
+    el.forEach(eachRow => {
+      rect = eachRow.getBoundingClientRect();
+    // check if rect is within the 500 tall
+    // checks bottom
+      if(tableRect.botto<rect.top){
+        if(tableRect.top>rect.top){
+          returnString += eachRow.value + ' ';  
+        }
+      }
+    });
+    if(returnString===''){
+      return alert('all mons visible in table');
+    }else{
+      alert(returnString, 'final IsElementInViewport alert');
+      return false; // false for usage in loop of Find
+    }
+
   }
-  return false;
+  
+  return returnString;
 }
 function roundIterator(){
   removeButtonShadow('roundIteratorButton');

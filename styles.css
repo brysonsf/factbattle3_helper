@@ -39,7 +39,7 @@ tr:active{
   width: 100%;
   color: darkred;
 }
-#pokemon_searchautocomplete-list, #pokemon_clearautocomplete-list {
+#pokemon_searchautocomplete-list, #pokemon_clearautocomplete-list, #pokemon_checkautocomplete-list {
   width: 100%;
 }
 #scientist-quotes-tips,
@@ -239,12 +239,16 @@ pre {
   left: 30%;
   top: 0px;
 }
-#resetButton, #findButton, #clearButton, #roundIteratorButton{
+#resetButton, #findButton, #clearButton, #roundIteratorButton, #checkButton{
   border: 0;
   size: inherit;
 }
 #resetLabel{
   width: 100%;
+}
+#checkButton > .poke_box{
+  left:0;
+  top: 0;
 }
 #resetButton > .poke_box{
   left: 50%;
